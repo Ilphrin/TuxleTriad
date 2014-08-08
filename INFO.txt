@@ -1,0 +1,4 @@
+Version = 1.2.1
+Author = Kévin Pellet alias "Ilphrin"
+contact = ilphrin@autistici.org
+

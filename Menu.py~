@@ -148,7 +148,7 @@ class Menu(pygame.sprite.Sprite):
                                 self.screen.blit(cursor1, cursors[0])
                                 self.screen.blit(cursor2, cursors[1])
                                 for j in range(4):
-                                    self.screen.blit(elements[j].surface,\
+                                    self.screen.blit(elements[i].surface,\
                                                       elements[j].rect)
                                 pygame.display.flip()
 

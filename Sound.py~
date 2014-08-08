@@ -41,5 +41,4 @@ class Sound():
         self.volume = [self.soundVolume, self.musicVolume]
 
     def playPutCard(self):
-        if not pygame.mixer.get_busy():
-            self.Channel.play(self.putcard)
+        self.Channel.play(self.putcard)

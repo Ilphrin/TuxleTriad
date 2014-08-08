@@ -7,7 +7,7 @@
 	    -menu.py --> game.py
 	* Create a 'Button' object to handle a...button
 		* Changed code in Menu.py and game.py to use Button objects instead of
-		lists.
+		lists. 
 	* Few little fixes.
 	+ Add an animation for a captured card.
 	

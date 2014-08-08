@@ -248,7 +248,9 @@ class Application():
             """Animation of a card put on the field"""
 
             if self.CARD.inHand == 1:
-            # We check if self..CARD is in the player's Hand
+            # We want the sound to be played only once, so we check if
+            # there isn't already a sound that is being player, and we check if
+            # self.CARD is in the player's Hand
                 self.Sound.playPutCard()
 
             # We drop the card off the Hand
