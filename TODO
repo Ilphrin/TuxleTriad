@@ -1,0 +1,3 @@
+- Add rules to the game. ('elementary' and 'plus')
+- Correct the 'event' handler.
+- Add possibility to play in fullscreen mode.

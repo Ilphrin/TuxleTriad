@@ -1,0 +1,2 @@
+sound = 1.0
+music = 0.0

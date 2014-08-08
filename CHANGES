@@ -1,0 +1,12 @@
+1.2.1:
+	* Fix a bug where sound wasn't saved in the right way and then made the
+	game crash.
+	* Changed names: 
+	    -listeCartes.py --> listOfCards.py
+	    -cartes (listOfcards.py) --> allcards
+	    -menu.py --> game.py
+	* Create a 'Button' object to handle a...button
+		* Changed code in Menu.py and game.py to use Button objects instead of
+		lists. 
+	+ Add an animation for a captured card.
+	
