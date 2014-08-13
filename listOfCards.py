@@ -45,7 +45,8 @@ allCards = [
     "Ubuntu",
     "MediaWiki",
     "Postfix",
-    "Tux"
+    "Tux",
+	"Ppsspp"
     ]
 
 values = [
@@ -86,5 +87,6 @@ values = [
     ['9', '4', '8', '4', None, None],
     ['6', '8', '4', '7', None, None],
     ['8', '8', '5', '4', None, None],
-    ['8', '3', '5', '8', None, None]
+    ['8', '3', '5', '8', None, None],
+	['8', '6', '7', '3', None, None]
     ]
