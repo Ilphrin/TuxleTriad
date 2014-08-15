@@ -134,7 +134,6 @@ class Application():
         if self.winner.text != "":
             self.winner.changeText()
             self.screen.blit(self.winner.surface, self.winner.rect)
-            print "Its over!"
 
         if self.cardFontSurf != None:
             self.screen.blit(self.backCard, self.backCardRect)
