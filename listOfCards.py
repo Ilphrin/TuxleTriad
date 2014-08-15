@@ -47,7 +47,8 @@ allCards = [
     "Postfix",
     "Tux",
     "Ppsspp",
-    "Clementine"
+    "Clementine",
+    "Open Broadcast Software"
     ]
 
 values = [
@@ -90,5 +91,6 @@ values = [
     ['8', '8', '5', '4', None, None],
     ['8', '3', '5', '8', None, None],
     ['8', '6', '7', '3', None, None],
-    ['3', '1', 'A', 'A', "Poison", None]
+    ['3', '1', 'A', 'A', "Poison", None],
+    ['5', '6', '6', '8', None, None]
     ]
