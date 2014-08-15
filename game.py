@@ -132,7 +132,9 @@ class Application():
         self.screen.blit(self.scorePlayer1.surface, self.scorePlayer1.rect)
         self.screen.blit(self.scorePlayer2.surface, self.scorePlayer2.rect)
         if self.winner.text != "":
+            self.winner.changeText()
             self.screen.blit(self.winner.surface, self.winner.rect)
+            print "Its over!"
 
         if self.cardFontSurf != None:
             self.screen.blit(self.backCard, self.backCardRect)
@@ -160,7 +162,7 @@ class Application():
 
             for event in pygame.event.get():
                 if event.type == MOUSEBUTTONUP and self.animation == 0:
-                    if event.button == 3:
+                    if event.button == 3 and self.winner.text == "":
                         if self.getCard(0):
                             self.showAbout()
                     if self.winner.text == "" and event.button == 1:
@@ -420,13 +422,15 @@ class Application():
 
     def winAnimation(self):
         if self.scorePlayer1.score > self.scorePlayer2.score:
-            self.winner.text = _(u"Blue win!")
+            self.winner.text = _("Blue win!")
+            self.winner.rect.topright = self.backgroundRect.midtop
         elif self.scorePlayer2.score > self.scorePlayer1.score:
-            self.winner.text = _(u"Red win!")
+            self.winner.text = _("Red win!")
+            self.winner.rect.topleft = self.backgroundRect.midtop
         else:
-            self.winner.text = _(u"Equality!")
-
-        self.winner.rect.midtop = self.backgroundRect.midtop
+            self.winner.text = _("Equality!")
+            self.winner.rect.midtop = self.backgroundRect.midtop
+        
         self.winner.rect.y += 10
         
     def getCard(self, player):

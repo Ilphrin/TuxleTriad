@@ -13,17 +13,25 @@ class Text():
         self.initialize()
 
     def initialize(self):
-        self.surface = self.font.render(self.text, True, self.color).convert_alpha()
-        self.rect = self.surface.get_rect()
+        self.surface = self.font.render(self.text, True, self.color)\
+                .convert_alpha()
+        self.rect = self.get_rect()
         
     def changeFont(self, font = None):
-        self.font = functions.getFont(font, self.size)            
+        self.font = functions.getFont(font, self.size)  
+        self.initialize()          
             
     def changeColor(self):
-        self.surface = self.font.render(self.text, True, self.color).convert_alpha()
+        self.surface = self.font.render(self.text, True, self.color)\
+                .convert_alpha()
+        self.initialize()
         
     def get_rect(self):
         return self.surface.get_rect()
+        
+    def changeText(self):
+        self.surface = self.font.render(self.text, True, self.color)\
+                .convert_alpha()
         
     def __repr__(self):
         return "Position topleft : {}\
