@@ -1,0 +1,4 @@
+Open BSD
+A Unix-like computer operating system
+October 1, 1996
+BSD, ISC, ATU and other custom licenses

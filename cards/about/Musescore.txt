@@ -1,0 +1,4 @@
+Musescore
+A scorewriter software
+February 27, 2013
+GNu GPLv2

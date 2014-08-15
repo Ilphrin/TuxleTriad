@@ -1,0 +1,4 @@
+Debian
+One of the most popular GNU/Linux distribution
+September 15, 1993
+mainly GPL

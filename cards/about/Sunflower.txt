@@ -1,0 +1,4 @@
+Sunflower
+A twin-panel file manager for Linux
+May, 2010
+GNU GPLv3

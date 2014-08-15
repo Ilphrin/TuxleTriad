@@ -1,0 +1,4 @@
+Mumble
+A client-server VoIP application
+2005
+New BSD License

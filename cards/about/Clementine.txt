@@ -1,0 +1,4 @@
+Clementine
+A free music player and library organizer
+February, 2010
+GNu GPLv3

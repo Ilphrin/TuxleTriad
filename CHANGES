@@ -1,13 +1,16 @@
-1.2.1:
+1.3:
 	* Fix a bug where sound wasn't saved in the right way and then made the
 	game crash.
 	* Changed names: 
 	    -listeCartes.py --> listOfCards.py
 	    -cartes (listOfcards.py) --> allcards
 	    -menu.py --> game.py
-	* Create a 'Button' object to handle a...button
-		* Changed code in Menu.py and game.py to use Button objects instead of
+	* Create a 'Text' object to handle...text
+		* Changed code in Menu.py and game.py to use Text objects instead of
 		lists.
 	* Few little fixes.
+	* Started implementation of gettext to add translations. WIP
 	+ Add an animation for a captured card.
-	
+	+ Add information about cards. Do a right-click on a card to see the About
+	  pop-up.
+	+ Add a sub-menu for future updates. Hot Seat is the only one working

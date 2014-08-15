@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 import pygame
 import sys
@@ -14,6 +14,7 @@ from Field import Field
 from Score import Score
 from Rules import adjacent
 from listOfCards import allCards  # The list of all the cards
+from Text import Text
 pygame.init()
 
 
@@ -33,7 +34,6 @@ class Application():
             self.Sound = Sound()
         else:
             self.Sound = soundInstance
-            print self.Sound.soundVolume
 
         self.background, self.backgroundRect = loadImage("background.jpg")
 
@@ -41,8 +41,10 @@ class Application():
         if boss != None:
             self.boss = boss
             self.boss.app = self
+            self.FONT = self.boss.FONT
         else:
             self.boss = None
+            self.FONT = "Dearest.ttf"
 
         # The Clock of the game, to manage the frame rate
         self.clock = pygame.time.Clock()
@@ -81,9 +83,9 @@ class Application():
         self.sensAnimation = 0
         self.player = 1
 
-        #self.Sound = Sound()
         self.position = None
         self.CARD = None
+        self.infoCARD = None
 
         # We create the field of the game, 3x3.
         sizeCard = self.player1Hand.cards[0].image.get_size()
@@ -92,8 +94,7 @@ class Application():
         self.emptyCase = 9
 
         # Manage the winner congratulations font
-        self.winner = None
-        self.winnerFont = pygame.font.Font(None, 60)
+        self.winner = Text("", self.FONT, white, 60)
 
         # Manage the display of the name of the card selected
         self.cardFont = pygame.font.Font(None, 40)
@@ -130,16 +131,18 @@ class Application():
         self.scorePlayer2.update()
         self.screen.blit(self.scorePlayer1.surface, self.scorePlayer1.rect)
         self.screen.blit(self.scorePlayer2.surface, self.scorePlayer2.rect)
-        if self.winner != None:
-            self.screen.blit(self.winnerSurface, self.winnerRect)
+        if self.winner.text != "":
+            self.screen.blit(self.winner.surface, self.winner.rect)
 
         if self.cardFontSurf != None:
             self.screen.blit(self.backCard, self.backCardRect)
             self.screen.blit(self.cardFontSurf, self.cardFontRect)
             self.cardFontSurf = None
-
-        pygame.display.flip()
-        self.clock.tick(self.fps)
+        
+        if self.infoCARD == None:
+        # If we aren't showing the about popup
+            pygame.display.flip()
+            self.clock.tick(self.fps)
 
     def main(self):
         self.cardsOwner()
@@ -157,7 +160,11 @@ class Application():
 
             for event in pygame.event.get():
                 if event.type == MOUSEBUTTONUP and self.animation == 0:
-                    if self.winner == None:
+                    if event.button == 3:
+                        if self.getCard(0):
+                            self.showAbout()
+                    if self.winner.text == "" and event.button == 1:
+                        self.infoCARD = None
                         self.playCard()
                 elif event.type == QUIT:
                     audio = [self.Sound.soundVolume, self.Sound.musicVolume]
@@ -182,11 +189,8 @@ class Application():
 
         if self.player == 1:
         # Player 1
-            for card in self.player1Hand.cards:
-                if card.rect.collidepoint(coords) and card.inHand:
-                    self.CARD = card
-                    self.selectedCard()
-                    break
+            if self.getCard(self.player):
+                self.selectedCard()
             if not self.CARD == None:
             # If we clicked on a card.
             # We wait for the event 'MOUSEBUTTONUP', so first we clean the
@@ -218,11 +222,8 @@ class Application():
 
         if self.player == -1:
         # Player -1...I mean Player 2
-            for card in self.player2Hand.cards:
-                if (card.rect.collidepoint(coords) and card.inHand):
-                    self.CARD = card
-                    self.selectedCard()
-                    break
+            if self.getCard(self.player):
+                self.selectedCard()
             if not self.CARD == None:
                 # Same as before
                 self.deactivate()
@@ -394,7 +395,6 @@ class Application():
         width = card.rect.width  # we expect 113. If not please change format.
         height = card.image.get_rect().height  # Here we expect 139.
         topleft = list(card.rect.topleft)
-        print height, "\t", topleft
         step = 16
 
         while(width != 1):
@@ -420,15 +420,101 @@ class Application():
 
     def winAnimation(self):
         if self.scorePlayer1.score > self.scorePlayer2.score:
-            self.winner = u"Blue win!"
+            self.winner.text = _(u"Blue win!")
         elif self.scorePlayer2.score > self.scorePlayer1.score:
-            self.winner = u"Red win!"
+            self.winner.text = _(u"Red win!")
         else:
-            self.winner = u"Equality!"
-        self.winnerSurface = self.winnerFont.render(self.winner, True, white)
-        self.winnerRect = self.winnerSurface.get_rect()
-        self.winnerRect.midtop = self.backgroundRect.midtop
-        self.winnerRect.y += 10
+            self.winner.text = _(u"Equality!")
+
+        self.winner.rect.midtop = self.backgroundRect.midtop
+        self.winner.rect.y += 10
+        
+    def getCard(self, player):
+        coords = pygame.mouse.get_pos()
+        if player == 1:
+            for card in self.player1Hand.cards:
+                if card.rect.collidepoint(coords) and card.inHand:
+                    self.CARD = card
+                    return 1
+        elif player == -1:
+            for card in self.player2Hand.cards:
+                if card.rect.collidepoint(coords) and card.inHand:
+                    self.CARD = card
+                    return 1
+        elif player == 0:
+            #Case if we get a right-click, then we want tu print the About 
+            #popup even if it is an ennemy's card
+            for card in self.player1Hand.cards:
+                if card.rect.collidepoint(coords):
+                    self.infoCARD = card.About
+                    return 1
+            for card in self.player2Hand.cards:
+                if card.rect.collidepoint(coords):
+                    self.infoCARD = card.About
+                    return 1         
+        return 0
+        
+    def showAbout(self):
+        width = 0
+        quit = 0
+        maxWidth = 400
+        background = pygame.Surface((width, 140), HWSURFACE).convert_alpha()
+        rect = background.get_rect()
+        background.fill((0,0,0,125))
+        if self.infoCARD.boss.owner == 1:
+            rect.topleft = self.infoCARD.boss.rect.topright
+        elif self.infoCARD.boss.owner == -1:
+            rect.topright = self.infoCARD.boss.rect.topleft
+        while 1:
+            self.update()
+            self.screen.blit(background,rect)
+            pygame.display.flip()
+            self.clock.tick(self.fps)
+            
+            if width < maxWidth and quit == 0:
+                width += 16
+                background = pygame.Surface((width, 140), HWSURFACE).convert_alpha()
+                rect = background.get_rect()
+                background.fill((0,0,0,125))
+                if self.infoCARD.boss.owner == 1:
+                    rect.topleft = self.infoCARD.boss.rect.topright
+                elif self.infoCARD.boss.owner == -1:
+                    rect.topright = self.infoCARD.boss.rect.topleft
+                    
+            if quit == 1:
+                width -= 16
+                background = pygame.Surface((width, 140), HWSURFACE).convert_alpha()
+                rect = background.get_rect()
+                background.fill((0,0,0,125))
+                if self.infoCARD.boss.owner == 1:
+                    rect.topleft = self.infoCARD.boss.rect.topright
+                elif self.infoCARD.boss.owner == -1:
+                    rect.topright = self.infoCARD.boss.rect.topleft
+            
+            if width <= 0:
+                if quit == 1:
+                    self.update()
+                    return
+                quit = 1
+        
+            for event in pygame.event.get():
+                if width == 0:
+                    self.infoCARD = None
+                    self.update()
+                    return 0
+                if event.type == MOUSEBUTTONUP:
+                    quit = 1
+                elif event.type == QUIT:
+                    audio = [self.Sound.soundVolume, self.Sound.musicVolume]
+                    setConfig("config.txt", audio)
+                    pygame.quit()
+                    sys.exit()
+                    
+            if width == maxWidth and quit == 0:
+                background.blit(self.infoCARD.surface, self.infoCARD.rect)
+                
+        
+        return 0
 
 if __name__ == '__main__':
     Application(800, 600)

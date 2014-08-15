@@ -1,0 +1,4 @@
+Xonotic
+First-person shooter video game
+December 23, 2010
+GPLv2

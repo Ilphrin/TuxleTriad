@@ -1,0 +1,4 @@
+Blender
+A 3D computer graphics software product
+1995
+GNU GPLv2

@@ -1,0 +1,4 @@
+MediaWiki
+A wiki software used to power wiki websites.
+January 25, 2002
+GNU GPLv2

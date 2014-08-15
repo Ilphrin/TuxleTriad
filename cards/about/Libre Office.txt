@@ -1,0 +1,4 @@
+Libre Office
+An office suite
+January 26, 2011
+GNU LGPLv3 and MPL

@@ -1,0 +1,4 @@
+Xchat
+An Internet Relay Chat (IRC) client.
+June 29, 1999
+Shareware for Windows and GNU GPL for others OS

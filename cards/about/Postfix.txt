@@ -1,0 +1,4 @@
+Postfix
+A mail transfer agent (MTA)
+December, 1998
+IBM Public License

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 # In this file we will code the functions that will manage the game's rules.
 # To use them, we will just import the file in the application and

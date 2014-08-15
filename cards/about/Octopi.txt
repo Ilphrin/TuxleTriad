@@ -1,0 +1,4 @@
+Octopi
+A graphical user interface for Pacman
+May 12, 2013
+GNU GPLv3

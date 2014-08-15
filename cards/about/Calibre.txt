@@ -1,0 +1,4 @@
+Calibre
+An e-book computer software application suite
+October 31, 2006
+GNU GPLv3

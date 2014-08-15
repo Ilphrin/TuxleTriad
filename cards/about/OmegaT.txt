@@ -1,0 +1,5 @@
+OmegaT
+A Computer-Assisted Translation (CAT) tool
+November 28, 2002
+GNU GPL
+

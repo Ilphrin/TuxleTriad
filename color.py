@@ -1,3 +1,5 @@
+# coding: utf-8
+
 aqua = (0, 255, 255)
 black = (0, 0, 0)
 blue = (0, 0, 255)

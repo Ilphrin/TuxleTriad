@@ -1,0 +1,4 @@
+GNOME
+A desktop environment for Unix-like OS
+March 3, 1999
+GLP and LGPL

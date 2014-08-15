@@ -1,0 +1,4 @@
+MySQL
+An open-source relational database management system.
+May 23, 1995
+GPL or commercial

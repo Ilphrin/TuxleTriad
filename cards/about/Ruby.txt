@@ -1,0 +1,4 @@
+Ruby
+A multi-paradigm programming language
+1995
+Ruby License or BDS License

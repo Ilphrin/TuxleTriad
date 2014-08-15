@@ -1,0 +1,4 @@
+PPSSPP
+A free and open-source PSP emulator
+November 1, 2012
+GNU GPLv2+

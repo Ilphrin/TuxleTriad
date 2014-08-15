@@ -1,0 +1,4 @@
+Pygame
+A set of Python modules for writing video games
+October 28, 2000
+GNU LGPLv2.1

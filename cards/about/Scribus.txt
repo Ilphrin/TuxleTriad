@@ -1,0 +1,4 @@
+Scribus
+A desktop publishing application
+June 26, 2003
+GNU GPLv2

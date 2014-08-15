@@ -1,0 +1,4 @@
+Inkscape
+A Vector graphics editor
+December 12, 2003
+GNU GPLv2

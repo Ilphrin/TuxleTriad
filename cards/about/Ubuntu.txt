@@ -1,0 +1,4 @@
+Ubuntu
+A Debian-based GNU/Linux operating system
+October 20, 2004
+Mainly GNU GPL and free software licenses

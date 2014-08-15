@@ -1,0 +1,4 @@
+Notepad++
+A text editor for windows
+November 24, 2003
+GNU GPLv2

@@ -1,0 +1,4 @@
+GlTron
+A multiplayer game with light cycles from Tron.
+1998
+GNU GPLv2

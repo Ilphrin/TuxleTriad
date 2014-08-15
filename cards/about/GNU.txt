@@ -1,0 +1,4 @@
+GNU
+A Unix-like computer operating system
+1983
+GNU GPLv3 and other free software licenses

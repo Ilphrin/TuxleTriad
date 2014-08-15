@@ -1,0 +1,4 @@
+VLC
+A media player and streaming media server
+February 2001
+GNU GPLv2 and LGPLv2.1

@@ -1,31 +1,37 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 import pygame
 import os
 import sys
+import gettext
 from functions import *
 from color import *
 from pygame.locals import *
 from game import Application
 from Sound import Sound
-from Buttons import Button
+from Text import Text
 pygame.init()
 
 
 class Menu(pygame.sprite.Sprite):
     def __init__(self, width, height):
+        self.FONT = "Playball.ttf"
+    
         # We create the window
         self.width = width
         self.height = height
-        FULLSCREEN = 0
+        fullscreen = 0
         self.dimension = (self.width, self.height)
-        self.screen = pygame.display.set_mode(self.dimension,  FULLSCREEN, 32)
+        self.screen = pygame.display.set_mode(self.dimension,  fullscreen)
         pygame.display.set_caption("TuxleTriad")
 
-        elemText = ["Play", "Options", "Rules", "About", "Quit Game"]
+        self._load_translation()
+
+        elemText = [_("Play"), _("Options"), _("Rules"), _("About"),
+                         _("Quit Game")]
         self.menu = []
         for elem in elemText:
-            self.menu.append(Button(elem, "Dearest.ttf", white))
+            self.menu.append(Text(elem, self.FONT, white, 40))
 
         posx = 400
         posy = 400 - (60 * len(elemText))
@@ -46,6 +52,7 @@ class Menu(pygame.sprite.Sprite):
 
         # Needed to keep track of the game if we do a pause during the game.
         self.app = None
+        
 
         self.main()
 
@@ -68,19 +75,58 @@ class Menu(pygame.sprite.Sprite):
     def play(self):
         """User clicked on "Play" """
         if self.app != None:
-            self.app.main()
+            texts = [_("Continue"),_("Adventure"), _("Solo"),
+                        _("Hot Seat"), _("Back")]
         else:
-            Application(800, 600, self.screen, self.sound, self)
+            texts = [_("Adventure"), _("Solo"),  _("Hot Seat"), _("Back")]    
+        length = len(texts)
+        if self.app != None:
+            textPos = [(250, 100), (250,200), (250, 300), (250,400),
+                        (550, 500)]
+        else:
+            textPos = [(250, 100), (250,200), (250, 300), (550, 500)]
+        elements = []
+        
+        for i in range(length):
+            elements.append(Text(texts[i], self.FONT, white, 45))
+            elements[i].rect.topleft = textPos[i]
+            
+        while 1:
+            self.screen.blit(self.bkgrnd, self.bkgrndRect)
+            for i in range(length):
+                self.screen.blit(elements[i].surface, elements[i].rect)
+            pygame.display.flip()
+            
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == MOUSEBUTTONUP:
+                    coordinates = pygame.mouse.get_pos()
+                    for i in range(length):
+                        if elements[i].rect.collidepoint(coordinates):
+                            if elements[i].text == _("Adventure"):
+                                print "Adventure!"
+                            elif elements[i].text == _("Solo"):
+                                print "Solo!"
+                            elif elements[i].text == _("Hot Seat"):
+                                self.hotSeat()
+                            elif elements[i].text == _("Back"):
+                                self.main()
+                            elif elements[i].text == _("Continue"):
+                                self.app.main()
+                    
+
 
     def options(self):
         pygame.event.clear()
-        texts = ["Audio", "Sounds", "Music", "Back"]
+        texts = [_(u"Audio"), _(u"Sounds"), _(u"Music"), _(u"Back")]
         length = len(texts)
         textsPos = [(320, 100), (100, 200), (100, 300), (500, 450)]
         elements = []
 
         for i in range(length):
-            elements.append(Button(texts[i], "Dearest.ttf", white))
+            elements.append(Text(texts[i], self.FONT, white, 50))
             elements[i].rect.topleft = textsPos[i]
 
         bar1, bar1Rect = loadImage("barSound.jpg")
@@ -165,18 +211,47 @@ class Menu(pygame.sprite.Sprite):
     def clicked(self):
         for button in self.menu:
             if button.rect.collidepoint(pygame.mouse.get_pos()):
-                if button.text == "Play":
+                if button.text == _(u"Play"):
                     self.play()
-                elif button.text == "Options":
+                elif button.text == _(u"Options"):
                     self.options()
-                elif button.text == "Rules":
+                elif button.text == _(u"Rules"):
                     print "Rules!"
-                elif button.text == "About":
+                elif button.text == _(u"About"):
                     print "About !"
-                elif button.text == "Quit Game":
+                elif button.text == _(u"Quit Game"):
                     self.quitGame()
-
-    def __repr__(self):
-        return "<Menu>"
+                    
+    def _load_translation(self):
+        base_path = os.path.dirname(os.path.dirname(sys.argv[0]))
+        directory = os.path.join(base_path, 'translations')
+        
+        params = {
+                    'domain': 'TuxleTriad',
+                    'fallback': True
+                 }
+        
+        if os.path.isdir(directory):
+            params.update({'localedir':directory})
+        
+        translation = gettext.translation(**params)
+        
+        translation.install("ngettext")
+        
+    def solo(self):
+        """1vsIA game"""
+        print "Solo!"
+        
+    def adventure(self):
+        """Adventure mode against IA"""
+        print "Adventure!"
+        
+    def hotSeat(self):
+        """1vs1 mode"""
+        if self.app != None:
+            del self.app
+            Application(800, 600, self.screen, self.sound, self)
+        else:
+            Application(800, 600, self.screen, self.sound, self)
 
 Menu(800, 600)

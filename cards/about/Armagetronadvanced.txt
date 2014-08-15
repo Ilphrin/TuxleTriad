@@ -1,0 +1,4 @@
+Armagetron Advanced
+A multiplayer game with light cycles from Tron.
+2001
+GNU GPLv2

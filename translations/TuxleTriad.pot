@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-08-15 16:43+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: game.py:423
+msgid "Blue win!"
+msgstr ""
+
+#: game.py:425
+msgid "Red win!"
+msgstr ""
+
+#: game.py:427
+msgid "Equality!"
+msgstr ""
+
+#: Menu.py:30 Menu.py:214
+msgid "Play"
+msgstr ""
+
+#: Menu.py:30 Menu.py:216
+msgid "Options"
+msgstr ""
+
+#: Menu.py:30 Menu.py:218
+msgid "Rules"
+msgstr ""
+
+#: Menu.py:30 Menu.py:220
+msgid "About"
+msgstr ""
+
+#: Menu.py:31 Menu.py:222
+msgid "Quit Game"
+msgstr ""
+
+#: Menu.py:78 Menu.py:116
+msgid "Continue"
+msgstr ""
+
+#: Menu.py:78 Menu.py:81 Menu.py:108
+msgid "Adventure"
+msgstr ""
+
+#: Menu.py:78 Menu.py:81 Menu.py:110
+msgid "Solo"
+msgstr ""
+
+#: Menu.py:79 Menu.py:81 Menu.py:112
+msgid "Hot Seat"
+msgstr ""
+
+#: Menu.py:79 Menu.py:81 Menu.py:114 Menu.py:123
+msgid "Back"
+msgstr ""
+
+#: Menu.py:123
+msgid "Audio"
+msgstr ""
+
+#: Menu.py:123
+msgid "Sounds"
+msgstr ""
+
+#: Menu.py:123
+msgid "Music"
+msgstr ""

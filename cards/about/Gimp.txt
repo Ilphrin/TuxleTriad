@@ -1,0 +1,4 @@
+(GNU Image Manipulation Program)
+A raster graphics editor for image retouching and editing
+January 1996
+GNU LGPL v3 and GNU GLPv3

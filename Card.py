@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 import pygame
 import os
@@ -6,6 +6,7 @@ from functions import *
 from color import *
 from pygame.locals import *
 from listOfCards import allCards, values
+from About import About
 
 
 class Card(pygame.sprite.Sprite):
@@ -16,16 +17,17 @@ class Card(pygame.sprite.Sprite):
         self.number = number
         self.name = allCards[self.number]
         #self.verso = carteVerso
+        self.About = About(self.name, self)
 
         # We put the numbers of the card according to listeCartes.py
         self.top = values[number][0]
         self.right = values[number][1]
         self.bottom = values[number][2]
         self.left = values[number][3]
-        # Offensive or defensive
-        self.type = values[number][4]
         # Which element
-        self.element = values[number][5]
+        self.element = values[number][4]
+        # Offensive or defensive
+        self.type = values[number][5]
         self.inHand = 1
         if self.owner == 1:
             File = os.path.join(os.getcwd(), "cards/" + self.name + "B.jpg")

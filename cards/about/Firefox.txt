@@ -1,0 +1,4 @@
+Mozilla Firefox
+A web browser by Mozilla
+September 23, 2002
+MPL
