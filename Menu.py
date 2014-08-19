@@ -10,6 +10,8 @@ from pygame.locals import *
 from game import Application
 from Sound import Sound
 from Text import Text
+from listOfCards import *
+from Card import Card
 pygame.init()
 
 
@@ -72,6 +74,26 @@ class Menu(pygame.sprite.Sprite):
             pygame.display.flip()
             self.clock.tick(self.fps)
 
+    def quitGame(self):
+        setConfig("config.txt", self.sound.volume)
+        pygame.quit()
+        sys.exit()
+
+    def clicked(self):
+        for button in self.menu:
+            if button.rect.collidepoint(pygame.mouse.get_pos()):
+                if button.text == _(u"Play"):
+                    self.play()
+                elif button.text == _(u"Options"):
+                    self.options()
+                elif button.text == _(u"Rules"):
+                    print "Rules!"
+                elif button.text == _(u"About"):
+                    self.about()
+                elif button.text == _(u"Quit Game"):
+                    self.quitGame()
+         
+
     def play(self):
         """User clicked on "Play" """
         if self.app != None:
@@ -116,8 +138,6 @@ class Menu(pygame.sprite.Sprite):
                             elif elements[i].text == _("Continue"):
                                 self.app.main()
                     
-
-
     def options(self):
         pygame.event.clear()
         texts = [_(u"Audio"), _(u"Sounds"), _(u"Music"), _(u"Back")]
@@ -201,27 +221,70 @@ class Menu(pygame.sprite.Sprite):
                     if elements[3].rect.collidepoint((mousex, mousey)):
                         self.main()
 
-            pygame.display.update()
+                pygame.display.update()
+                
+    def about(self):
+        page = 1
+        allPage = []
+        pageList = []
+        index = 0
+        for number in range(len(allCards)):
+            pageList.append(Card(number, 1))
+            index += 1
+            if index == 3 :
+                allPage.append(pageList)
+                del pageList
+                pageList = []
+                index = 0
 
-    def quitGame(self):
-        setConfig("config.txt", self.sound.volume)
-        pygame.quit()
-        sys.exit()
+        maxPage = len(allPage)
+        txtPage = str(page) + "/" + str(maxPage)
 
-    def clicked(self):
-        for button in self.menu:
-            if button.rect.collidepoint(pygame.mouse.get_pos()):
-                if button.text == _(u"Play"):
-                    self.play()
-                elif button.text == _(u"Options"):
-                    self.options()
-                elif button.text == _(u"Rules"):
-                    print "Rules!"
-                elif button.text == _(u"About"):
-                    print "About !"
-                elif button.text == _(u"Quit Game"):
-                    self.quitGame()
+        navigation = [_("Back"), _("Next"), _("Quit"), txtPage]
+        navigationPos = [(80,550), (650,550), (660,50), (350,550)]
+        elements = []
+        for i in range(len(navigation)):
+            elements.append(Text(navigation[i], self.FONT, white, 30))
+            elements[i].rect.topleft = navigationPos[i]
+
+        cardPos = [(80,50), (80,200), (80, 350)]
+
+        while 1:
+            self.screen.blit(self.bkgrnd, self.bkgrndRect)
+            for element in elements:
+                self.screen.blit(element.surface,element.rect)
+
+            for elem in range(len(allPage[page-1])):
+                card = allPage[page-1][elem]
+                card.rect.topleft = cardPos[elem]
+                card.About.rect.topleft = card.rect.topright
+            
+            for elem in allPage[page-1]:
+                self.screen.blit(elem.image, elem.rect)
+                self.screen.blit(elem.About.surface, elem.About.rect)
+            
+            for event in pygame.event.get():
+                if event.type == MOUSEBUTTONUP:
+                    coords = pygame.mouse.get_pos()
                     
+                    for button in elements:
+                        if button.rect.collidepoint(coords):
+                            if button.text == _("Back"):
+                                if page > 1:
+                                    page -= 1
+                            if button.text == _("Next"):
+                                if page < maxPage:
+                                    page += 1
+                            if button.text == _("Quit"):
+                                self.main()
+                            txtPage = str(page) + "/" + str(maxPage)
+                            elements[3] = Text(txtPage, self.FONT, white, 30)
+                            elements[3].rect.topleft = navigationPos[3]
+                if event.type == QUIT:
+                    self.quitGame()
+
+            pygame.display.flip()
+           
     def _load_translation(self):
         base_path = os.path.dirname(os.path.dirname(sys.argv[0]))
         directory = os.path.join(base_path, 'translations')
@@ -239,7 +302,7 @@ class Menu(pygame.sprite.Sprite):
         translation.install("ngettext")
         
     def solo(self):
-        """1vsIA game"""
+        """1vsIA mode"""
         print "Solo!"
         
     def adventure(self):

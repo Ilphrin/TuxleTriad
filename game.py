@@ -54,9 +54,9 @@ class Application():
 
         # We generate two  and draw 5 cards from each
         # to have an entire Hand of Card
-        list1 = [i for i in range(len(allCards))]
+        list1 = [card for card in range(len(allCards))]
         random.shuffle(list1)
-        list2 = [i for i in range(len(allCards))]
+        list2 = [card for card in range(len(allCards))]
         random.shuffle(list2)
         for i in range(5):
             number = list1[0]
@@ -460,7 +460,7 @@ class Application():
     def showAbout(self):
         width = 0
         quit = 0
-        maxWidth = 400
+        maxWidth = 450
         background = pygame.Surface((width, 140), HWSURFACE).convert_alpha()
         rect = background.get_rect()
         background.fill((0,0,0,125))
@@ -475,7 +475,7 @@ class Application():
             self.clock.tick(self.fps)
             
             if width < maxWidth and quit == 0:
-                width += 16
+                width += 25
                 background = pygame.Surface((width, 140), HWSURFACE).convert_alpha()
                 rect = background.get_rect()
                 background.fill((0,0,0,125))
@@ -485,7 +485,7 @@ class Application():
                     rect.topright = self.infoCARD.boss.rect.topleft
                     
             if quit == 1:
-                width -= 16
+                width -= 25
                 background = pygame.Surface((width, 140), HWSURFACE).convert_alpha()
                 rect = background.get_rect()
                 background.fill((0,0,0,125))
@@ -514,6 +514,7 @@ class Application():
                     sys.exit()
                     
             if width == maxWidth and quit == 0:
+                background.fill((0,0,0,0))
                 background.blit(self.infoCARD.surface, self.infoCARD.rect)
                 
         

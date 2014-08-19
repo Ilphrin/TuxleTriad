@@ -1,4 +1,4 @@
-Thunderbird.txt
+Thunderbird
 An email, news and chat client byt Mozilla
 July 28, 2003
 MPL

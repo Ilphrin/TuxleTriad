@@ -11,7 +11,8 @@ class Sound():
     """Create and manage the Audio settings of the game"""
     def __init__(self):
         self.folder = os.getcwd()
-        pygame.mixer.music.load(os.path.join(self.folder, 'musics/music.ogg'))
+        pygame.mixer.music.load(os.path.join(self.folder, \
+                        'musics/Olga_Scotland_-_Glass_Pumpa_.ogg'))
         pygame.mixer.music.play(-1, 1.0)
 
         self.fPutCard = os.path.join(self.folder, "sounds/putCard.ogg")

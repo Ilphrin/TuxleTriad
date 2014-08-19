@@ -32,7 +32,8 @@ class About():
         self.licenseRect = self.license.get_rect()
         self.licenseRect.topleft = (135, 120)
         
-        self.surface = pygame.Surface((400, 140), HWSURFACE)
+        self.surface = pygame.Surface((450, 140), HWSURFACE).convert_alpha()
+        self.surface.fill((0,0,0,125))
         self.rect = self.surface.get_rect()
         self.surface.blit(self.name.surface, self.nameRect)
         self.surface.blit(self.description.surface, self.descriptionRect)
@@ -44,6 +45,7 @@ class About():
         
         
     def __repr__(self):
-        output = self.name + "\n" + self.description + "\n" + self.initialRelease + "\t\t" + self.license + "\n"
+        output = self.name + "\n" + self.description + "\n" + \
+                        self.initialRelease + "\t\t" + self.license + "\n"
         output = str(output)
         return output
