@@ -1,0 +1,4 @@
+DOSBox
+An v86 emulator with DOS
+2013
+GNU GPL
