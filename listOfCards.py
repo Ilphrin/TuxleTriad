@@ -47,7 +47,10 @@ allCards = [
     "Postfix",
     "Tux",
     "Ppsspp",
-    "Clementine"
+    "Clementine",
+    "Wine",
+    "Dosbox",
+    "Freemind"
     ]
 
 values = [
@@ -71,7 +74,7 @@ values = [
     ['8', 'A', '3', '5', None, None],
     ['8', 'A', '3', '5', None, None],
     ['5', 'A', '8', '3', None, None],
-    ['A', '1', '7', '7', Wind, None],
+    ['A', '1', '7', '7', "wind", None],
     ['7', 'A', '1', '7', "water", None],
     ['8', '4', 'A', '4', None, None],
     ['8', '9', '6', '2', None, None],
@@ -90,5 +93,8 @@ values = [
     ['8', '8', '5', '4', None, None],
     ['8', '3', '5', '8', None, None],
     ['8', '6', '7', '3', None, None],
-    ['3', '1', 'A', 'A', "poison", None]
+    ['3', '1', 'A', 'A', "poison", None],
+    ['8', '5', '2', '8', "thunder", None],
+    ['8', '8', '4', '4', None, None],
+    ['8', '4', '4', '8', None, None]
     ]
