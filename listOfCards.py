@@ -45,7 +45,9 @@ allCards = [
     "Ubuntu",
     "MediaWiki",
     "Postfix",
-    "Tux"
+    "Tux",
+    "Ppsspp",
+    "Clementine"
     ]
 
 values = [
@@ -56,28 +58,28 @@ values = [
     ['8', '5', 'A', '6', None, None],
     ['2', '6', '9', 'A', None, None],
     ['A', '8', '2', '6', None, None],
-    ['5', '1', '9', '9', None, None],
-    ['9', '5', '2', '9', None, None],
+    ['5', '1', '9', '9', Earth, None],
+    ['9', '5', '2', '9', Earth, None],
     ['A', '7', '2', '8', None, None],
     ['6', '7', '6', 'A', None, None],
     ['9', '6', 'A', '2', None, None],
     ['A', '8', '6', '4', None, None],
     ['5', 'A', '3', '9', None, None],
     ['7', '4', '6', 'A', None, None],
-    ['7', '2', '7', 'A', None, None],
-    ['9', 'A', '4', '2', None, None],
+    ['7', '2', '7', 'A', Fire, None],
+    ['9', 'A', '4', '2', Holy, None],
     ['8', 'A', '3', '5', None, None],
     ['8', 'A', '3', '5', None, None],
     ['5', 'A', '8', '3', None, None],
-    ['A', '1', '7', '7', None, None],
-    ['7', 'A', '1', '7', None, None],
+    ['A', '1', '7', '7', Wind, None],
+    ['7', 'A', '1', '7', Water, None],
     ['8', '4', 'A', '4', None, None],
     ['8', '9', '6', '2', None, None],
-    ['9', '6', '2', '8', None, None],
+    ['9', '6', '2', '8', Fire, None],
     ['5', '7', '8', '5', None, None],
     ['4', '4', '8', '9', None, None],
-    ['2', '9', '9', '4', None, None],
-    ['6', '7', '4', '9', None, None],
+    ['2', '9', '9', '4', Thunder, None],
+    ['6', '7', '4', '9', Ice, None],
     ['9', '6', '7', '3', None, None],
     ['7', '7', '2', '8', None, None],
     ['9', '3', '9', '2', None, None],
@@ -86,5 +88,6 @@ values = [
     ['9', '4', '8', '4', None, None],
     ['6', '8', '4', '7', None, None],
     ['8', '8', '5', '4', None, None],
-    ['8', '3', '5', '8', None, None]
+    ['8', '3', '5', '8', None, None],
+    ['3', '1', 'A', 'A', Poison, None]
     ]
