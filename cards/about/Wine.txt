@@ -1,0 +1,4 @@
+Wine
+Wine is a free implementation of Windows on Unix.
+
+LGPL 2.1
