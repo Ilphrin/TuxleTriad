@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-15 16:43+0200\n"
+"POT-Creation-Date: 2014-08-22 12:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,66 +17,74 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: game.py:423
+#: game.py:424
 msgid "Blue win!"
 msgstr ""
 
-#: game.py:425
+#: game.py:427
 msgid "Red win!"
 msgstr ""
 
-#: game.py:427
+#: game.py:430
 msgid "Equality!"
 msgstr ""
 
-#: Menu.py:30 Menu.py:214
+#: Menu.py:32 Menu.py:85
 msgid "Play"
 msgstr ""
 
-#: Menu.py:30 Menu.py:216
+#: Menu.py:32 Menu.py:87
 msgid "Options"
 msgstr ""
 
-#: Menu.py:30 Menu.py:218
+#: Menu.py:32 Menu.py:89
 msgid "Rules"
 msgstr ""
 
-#: Menu.py:30 Menu.py:220
+#: Menu.py:32 Menu.py:91
 msgid "About"
 msgstr ""
 
-#: Menu.py:31 Menu.py:222
+#: Menu.py:33 Menu.py:93
 msgid "Quit Game"
 msgstr ""
 
-#: Menu.py:78 Menu.py:116
+#: Menu.py:100 Menu.py:138
 msgid "Continue"
 msgstr ""
 
-#: Menu.py:78 Menu.py:81 Menu.py:108
+#: Menu.py:100 Menu.py:103 Menu.py:130
 msgid "Adventure"
 msgstr ""
 
-#: Menu.py:78 Menu.py:81 Menu.py:110
+#: Menu.py:100 Menu.py:103 Menu.py:132
 msgid "Solo"
 msgstr ""
 
-#: Menu.py:79 Menu.py:81 Menu.py:112
+#: Menu.py:101 Menu.py:103 Menu.py:134
 msgid "Hot Seat"
 msgstr ""
 
-#: Menu.py:79 Menu.py:81 Menu.py:114 Menu.py:123
+#: Menu.py:101 Menu.py:103 Menu.py:136 Menu.py:143 Menu.py:243 Menu.py:278
 msgid "Back"
 msgstr ""
 
-#: Menu.py:123
+#: Menu.py:143
 msgid "Audio"
 msgstr ""
 
-#: Menu.py:123
+#: Menu.py:143
 msgid "Sounds"
 msgstr ""
 
-#: Menu.py:123
+#: Menu.py:143
 msgid "Music"
+msgstr ""
+
+#: Menu.py:243 Menu.py:281
+msgid "Next"
+msgstr ""
+
+#: Menu.py:243 Menu.py:284
+msgid "Quit"
 msgstr ""
