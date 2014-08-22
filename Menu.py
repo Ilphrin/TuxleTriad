@@ -82,6 +82,7 @@ class Menu(pygame.sprite.Sprite):
     def clicked(self):
         for button in self.menu:
             if button.rect.collidepoint(pygame.mouse.get_pos()):
+                self.sound.clicMenu.play()
                 if button.text == _(u"Play"):
                     self.play()
                 elif button.text == _(u"Options"):
@@ -127,6 +128,7 @@ class Menu(pygame.sprite.Sprite):
                     coordinates = pygame.mouse.get_pos()
                     for i in range(length):
                         if elements[i].rect.collidepoint(coordinates):
+                            self.sound.clicMenu.play()
                             if elements[i].text == _("Adventure"):
                                 print "Adventure!"
                             elif elements[i].text == _("Solo"):
@@ -219,6 +221,7 @@ class Menu(pygame.sprite.Sprite):
                                 pygame.display.flip()
 
                     if elements[3].rect.collidepoint((mousex, mousey)):
+                        self.sound.clicMenu.play()
                         self.main()
 
                 pygame.display.update()
@@ -277,6 +280,7 @@ class Menu(pygame.sprite.Sprite):
                     
                     for button in elements:
                         if button.rect.collidepoint(coords):
+                            self.sound.clicMenu.play()
                             if button.text == _("Back"):
                                 if page > 1:
                                     page -= 1

@@ -17,9 +17,11 @@ class Sound():
 
         self.fPutCard = os.path.join(self.folder, "sounds/putCard.ogg")
         self.fSlctCard = os.path.join(self.folder, "sounds/capturedCard.ogg")
+        self.clic = os.path.join(self.folder, "sounds/clic.ogg")
 
         self.putCard()
         self.captureCard()
+        self.clicMenu()
 
         File = readFile("config.txt")
         self.soundVolume, self.musicVolume = getConfig(File)
@@ -34,9 +36,13 @@ class Sound():
 
     def captureCard(self):
         self.capturedCard = pygame.mixer.Sound(self.fSlctCard)
+    
+    def clicMenu(self):
+        self.clicMenu = pygame.mixer.Sound(self.clic)
 
     def update(self):
         self.putcard.set_volume(self.soundVolume)
+        self.clicMenu.set_volume(self.soundVolume)
         #self.capturedCard.set_volume(self.soundVolume)
         pygame.mixer.music.set_volume(self.musicVolume)
         self.volume = [self.soundVolume, self.musicVolume]
