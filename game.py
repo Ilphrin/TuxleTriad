@@ -433,6 +433,7 @@ class Application():
         self.winner.rect.y += 10
         
     def getCard(self, player):
+        """Return the card at pygame.mouse.get_pos() coordinates """
         coords = pygame.mouse.get_pos()
         if player == 1:
             for card in self.player1Hand.cards:
@@ -445,14 +446,14 @@ class Application():
                     self.CARD = card
                     return 1
         elif player == 0:
-            #Case if we get a right-click, then we want tu print the About 
+            #Case if we get a right-click, then we want to print the About 
             #popup even if it is an ennemy's card
             for card in self.player1Hand.cards:
-                if card.rect.collidepoint(coords):
+                if card.rect.collidepoint(coords) and card.inHand:
                     self.infoCARD = card.About
                     return 1
             for card in self.player2Hand.cards:
-                if card.rect.collidepoint(coords):
+                if card.rect.collidepoint(coords) and card.inHand:
                     self.infoCARD = card.About
                     return 1         
         return 0

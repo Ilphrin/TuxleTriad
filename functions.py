@@ -12,6 +12,13 @@ def loadImage(name):
     rect = image.get_rect()
     return image, rect
 
+def loadElement(name):
+    """Example:
+    image, rect = loadImage("myPic.png") """
+    name = name + ".png"
+    image = pygame.image.load(os.path.join(os.getcwd(), "element", name)).convert_alpha()
+    rect = image.get_rect()
+    return image, rect
 
 def getFont(fontName, size):
     """ Example:

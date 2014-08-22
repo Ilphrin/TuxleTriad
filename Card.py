@@ -30,8 +30,15 @@ class Card(pygame.sprite.Sprite):
         # Offensive or defensive
         self.type = values[number][5]
         self.inHand = 1
+        
         getCard(self)
         self.rect = self.image.get_rect()
+        if self.element != None:
+            self.element, self.elementRect = loadElement(self.element)
+            self.elementRect.topright = self.rect.topright
+            self.elementRect.move_ip(-2, 2)
+            self.image.blit(self.element, self.elementRect)
+
 
     def changeOwner(self, position):
         getCard(self)

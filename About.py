@@ -31,7 +31,7 @@ class About():
         self.license = Text(fileObject.readline()[:-1], font, white, 12)
         self.licenseRect = self.license.get_rect()
         self.licenseRect.topleft = (135, 120)
-        
+
         self.surface = pygame.Surface((450, 140), HWSURFACE).convert_alpha()
         self.surface.fill((0,0,0,125))
         self.rect = self.surface.get_rect()

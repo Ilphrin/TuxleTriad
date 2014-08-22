@@ -240,14 +240,20 @@ class Menu(pygame.sprite.Sprite):
         maxPage = len(allPage)
         txtPage = str(page) + "/" + str(maxPage)
 
-        navigation = [_("Back"), _("Next"), _("Quit"), txtPage]
-        navigationPos = [(80,550), (650,550), (660,50), (350,550)]
+        navigation = [_("Back"), _("Next"), _("Quit"), "Programming:", 
+                    "Kevin \"Ilphrin\" Pellet", "Graphics:", "Yunero Kisapsodos", txtPage]
+        navigationPos = [(80,550), (650,550), (660,40), (630, 100),
+                    (640, 130), (630, 200), (640, 230), (350,550)]
         elements = []
         for i in range(len(navigation)):
-            elements.append(Text(navigation[i], self.FONT, white, 30))
+            if 2 < i < 7:
+                size = 18
+            else:
+                size = 30
+            elements.append(Text(navigation[i], self.FONT, white, size))
             elements[i].rect.topleft = navigationPos[i]
 
-        cardPos = [(80,50), (80,200), (80, 350)]
+        cardPos = [(50,50), (50,200), (50, 350)]
 
         while 1:
             self.screen.blit(self.bkgrnd, self.bkgrndRect)
@@ -278,8 +284,8 @@ class Menu(pygame.sprite.Sprite):
                             if button.text == _("Quit"):
                                 self.main()
                             txtPage = str(page) + "/" + str(maxPage)
-                            elements[3] = Text(txtPage, self.FONT, white, 30)
-                            elements[3].rect.topleft = navigationPos[3]
+                            elements[7] = Text(txtPage, self.FONT, white, 30)
+                            elements[7].rect.topleft = navigationPos[7]
                 if event.type == QUIT:
                     self.quitGame()
 
