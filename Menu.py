@@ -247,10 +247,12 @@ class Menu(pygame.sprite.Sprite):
         elements = []
         for i in range(len(navigation)):
             if 2 < i < 7:
-                size = 18
+                size = 12
+                font = "rimouski sb.ttf"
             else:
+                font = self.FONT
                 size = 30
-            elements.append(Text(navigation[i], self.FONT, white, size))
+            elements.append(Text(navigation[i], font, white, size))
             elements[i].rect.topleft = navigationPos[i]
 
         cardPos = [(50,50), (50,200), (50, 350)]
