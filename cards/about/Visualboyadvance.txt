@@ -1,0 +1,4 @@
+Visual Boy Advance
+A free emulator of many Game Boy consoles.
+
+GNU GPL
