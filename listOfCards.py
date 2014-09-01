@@ -48,7 +48,10 @@ allCards = [
     "Clementine",
     "Wine",
     "Dosbox",
-    "Freemind"
+    "Freemind",
+    "Latex",
+    "Pidgin",
+    "Visualboyadvance"
     ]
 values = [
     ['A', '4', '6', '9', None, None],
@@ -93,5 +96,8 @@ values = [
     ['3', '1', 'A', 'A', "poison", None],
     ['8', '5', '2', '8', "thunder", None],
     ['8', '8', '4', '4', None, None],
-    ['8', '4', '4', '8', None, None]
+    ['8', '4', '4', '8', None, None],
+    ['7', '5', '8', '1', None, None],
+    ['1', '8', '4', '8', None, None],
+    ['6', '5', '4', '8', None, None]
     ]
