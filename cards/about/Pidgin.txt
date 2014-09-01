@@ -1,0 +1,4 @@
+Pidgin
+A chat program which lets you log in to accounts on multiple chat networks simultaneously.
+
+GNU GPL
