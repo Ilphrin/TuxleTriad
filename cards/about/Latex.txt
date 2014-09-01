@@ -1,0 +1,4 @@
+LaTeX
+A document preparation system for high-quality typesetting.
+
+LPPL
