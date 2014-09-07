@@ -7,7 +7,8 @@ from pygame.locals import *
 
 class Field():
     """Crée un terrain de 3x3 cases"""
-    def __init__(self, width, height, (cardWidth, cardHeight)):
+    def __init__(self, width, height, (cardWidth, cardHeight), boss):
+        self.boss = boss
         self.x = width / 7
         self.y = height / 7
         self.width = width * 5 / 7
@@ -17,14 +18,51 @@ class Field():
         x = 92
         y = 60
         self.positions = [
-            # First column
-            (2.53 * x, 1.6 * y), (2.53 * x, 4.0 * y), (2.53 * x, 6.4 * y),
-            # Second column
-            (3.75 * x, 1.6 * y), (3.75 * x, 4.0 * y), (3.75 * x, 6.4 * y),
-            # Third column
-            (4.98 * x, 1.6 * y), (4.98 * x, 4.0 * y), (4.98 * x, 6.4 * y)
+            # First line
+            (2.53 * x, 1.6 * y), (3.75 * x, 1.6 * y), (4.98 * x, 1.6 * y),
+            # Second line
+            (2.53 * x, 4.0 * y), (3.75 * x, 4.0 * y), (4.98 * x, 4.0 * y),
+            # Third line
+            (2.53 * x, 6.4 * y), (3.75 * x, 6.4 * y), (4.98 * x, 6.4 * y)
             ]
         self.fieldRects = []
         self.fieldSurf = []
+        lineField = []
         for i in self.positions:
-            self.fieldRects.append(pygame.Rect(i, (cardWidth, cardHeight)))
+            lineField.append(pygame.Rect(i, (cardWidth, cardHeight)))
+            
+            if len(lineField) == 3:
+                self.fieldRects.append(lineField)
+                lineField = []
+            
+    def saveState(self):
+        """Allow to save the state of the game, to play later or for IA to
+        to know the situation"""
+        
+        self.state = []
+        self.line = []
+        
+        index = 0
+        filled = 0
+        
+        for line in self.fieldRects:
+            #print line
+            for rect in line:
+                filled = 0
+                for card in self.boss.player1Hand.cards:
+                    if card.rect.topleft == rect.topleft:
+                        self.line.append(card)
+                        filled = 1
+                for card in self.boss.player2Hand.cards:
+                    if card.rect.topleft == rect.topleft:
+                        self.line.append(card)
+                        filled = 1
+                        
+                if not filled:
+                    self.line.append(None)
+
+            self.state.append(self.line)
+            self.line = []
+            
+        for line in self.state:
+            print line

@@ -55,6 +55,7 @@ class Application():
         # We generate two  and draw 5 cards from each
         # to have an entire Hand of Card
         list1 = [card for card in range(len(allCards))]
+        print len(list1)
         random.shuffle(list1)
         list2 = [card for card in range(len(allCards))]
         random.shuffle(list2)
@@ -89,7 +90,7 @@ class Application():
 
         # We create the field of the game, 3x3.
         sizeCard = self.player1Hand.cards[0].image.get_size()
-        self.field = Field(self.width, self.height, sizeCard)
+        self.field = Field(self.width, self.height, sizeCard, self)
         self.alphaAnimation = 255
         self.emptyCase = 9
 
@@ -170,6 +171,7 @@ class Application():
                 elif event.type == QUIT:
                     audio = [self.Sound.soundVolume, self.Sound.musicVolume]
                     setConfig("config.txt", audio)
+                    self.field.saveState()
                     pygame.quit()
                     sys.exit()
                 else:
@@ -209,14 +211,15 @@ class Application():
                 # If the player clicked on the field this time, we test
                 #each cases of the Field.
                 if self.field.rect.collidepoint(pygame.mouse.get_pos()):
-                    for case in self.field.fieldRects:
-                        if case.collidepoint(pygame.mouse.get_pos()):
-                            self.position = case.topleft
-                            if not self.caseFilled():
-                                self.animation = 1
-                                self.putCard()
-                                self.cardsOwner()
-                            return
+                    for line in self.field.fieldRects:
+                        for case in line:
+                            if case.collidepoint(pygame.mouse.get_pos()):
+                                self.position = case
+                                if not self.caseFilled():
+                                    self.animation = 1
+                                    self.putCard()
+                                    self.cardsOwner()
+                                return
                 else:
                     self.deselectedCard()
                     self.CARD = None
@@ -234,14 +237,15 @@ class Application():
                     pass
                 self.reactivate()
                 if self.field.rect.collidepoint(pygame.mouse.get_pos()):
-                    for case in self.field.fieldRects:
-                        if case.collidepoint(pygame.mouse.get_pos()):
-                            self.position = case.topleft
-                            if not self.caseFilled():
-                                self.animation = 1
-                                self.putCard()
-                                self.cardsOwner()
-                            return
+                    for line in self.field.fieldRects:
+                        for case in line:
+                            if case.collidepoint(pygame.mouse.get_pos()):
+                                self.position = case
+                                if not self.caseFilled():
+                                    self.animation = 1
+                                    self.putCard()
+                                    self.cardsOwner()
+                                return
                 else:
                     self.deselectedCard()
                     self.CARD = None
@@ -268,7 +272,7 @@ class Application():
 
             # We change the position of the card and the animation's direction
             if self.CARD.image.get_alpha() == 5:
-                self.CARD.rect.topleft = self.position
+                self.CARD.rect = self.position
                 self.sensAnimation = 1
 
             if self.CARD.image.get_alpha() == 255 and self.sensAnimation == 1:
@@ -310,10 +314,10 @@ class Application():
     def caseFilled(self):
         """Say if there is already a card in the case"""
         for card in self.player1Hand.cards:
-            if card.rect.topleft == self.position:
+            if card.rect == self.position:
                 return 1
         for card in self.player2Hand.cards:
-            if card.rect.topleft == self.position:
+            if card.rect == self.position:
                 return 1
         return 0
 
