@@ -23,7 +23,10 @@ class Sound():
         self.captureCard()
         self.clicMenu()
 
-        File = readFile("config.txt")
+        
+        File = readFile()
+        
+        configExist()
         self.soundVolume, self.musicVolume = getConfig(File)
 
         self.Channel = pygame.mixer.find_channel()

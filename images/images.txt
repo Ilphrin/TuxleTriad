@@ -1,0 +1,2 @@
+These .xcf file images aren't needed by the program, they are Gimp format so
+you can modify them with these files and then place it in the main folder.

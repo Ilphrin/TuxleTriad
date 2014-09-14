@@ -1,3 +1,4 @@
 - Add rules to the game. ('elementary' and 'plus')
 - Correct the 'event' handler.
-- Add possibility to play in fullscreen mode.
+
+Modifier les fonctions de functions pour vérifier qu'il existe un dossier "TuxleTriad" dans ~/.config si le jeu est installé dans /usr/ ou /opt/, si y'en a pas, le créer, et créer un fichier config.txt avec des valeurs de base.

@@ -1,0 +1,25 @@
+1. CREDITS
+
+Author = Kévin Pellet (Ilphrin)
+Graphics = Yunero Kisapsodos
+Maintainer = Devyn Collier Johnson
+
+Contact = ilphrin@autistici.org
+
+2. INSTALLATION
+
+You need to install these packages to run TuxleTriad:
+
+	- Python2.7.x (not Python 3.x !)
+	- Numpy
+	- Pygame
+
+3. ABOUT
+
+TuxleTriad is based on a mini game of Final Fantasy VIII called TripleTriad.
+To play it, you can launch Menu.py with python2.7.x, or game.py if you want to
+play without a Menu, then you won't be able to change the configuration or do
+anything in the Menu application.
+
+The main theme music of the game is released by Olga Scotland, you can check
+her website at http://vargan.ru/olgascotland.html

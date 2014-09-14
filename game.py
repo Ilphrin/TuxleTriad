@@ -170,7 +170,7 @@ class Application():
                         self.playCard()
                 elif event.type == QUIT:
                     audio = [self.Sound.soundVolume, self.Sound.musicVolume]
-                    setConfig("config.txt", audio)
+                    setConfig(audio)
                     self.field.saveState()
                     pygame.quit()
                     sys.exit()

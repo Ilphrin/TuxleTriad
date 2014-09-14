@@ -75,7 +75,7 @@ class Menu(pygame.sprite.Sprite):
             self.clock.tick(self.fps)
 
     def quitGame(self):
-        setConfig("config.txt", self.sound.volume)
+        setConfig(self.sound.volume)
         pygame.quit()
         sys.exit()
 

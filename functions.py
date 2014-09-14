@@ -28,37 +28,68 @@ def getFont(fontName, size):
     return font
 
 
-def readFile(fileName):
+def readFile():
     """Example:
     file = readFile("myFile.txt") """
 
-    pathName = os.path.join(os.getcwd(), fileName)
+    pathName = checkPath()
+    if not configExist():
+        setConfig((1.0,1.0))
     fileObject = open(pathName, "r")
     return fileObject.read()
 
+def checkPath():
+    """Create a path name for config file depending on location of the program"""
+    
+    currentPath = os.getcwd()
+    if ("/usr" or "/opt") in currentPath:
+        pathName = os.path.expanduser("~/.config/tuxle-triad/config.txt")
+    else:
+        pathName = os.path.join(os.getcwd(), "config.txt")
+    
+    return pathName
+
+def configExist():
+    """Verify if the program is an installed version, and so check if there
+    is a configuration folder in ~/.config"""
+    
+    currentPath = os.getcwd()
+    print currentPath
+    if ("/usr" or "/opt") in currentPath:
+        pathName = os.path.expanduser("~/.config/tuxle-triad/")
+        
+        if not os.path.exists(pathName):
+            os.makedirs(pathName)
+            print "Creating a configuration folder at" + pathName
+            open(os.path.join(pathName, "config.txt"), "w")
+            return False
+            
+        return True
+    else:
+        return True
 
 def getConfig(fileContent):
     """Example:
     sound, music = getConfig(file)"""
+    
+    if configExist():
+        index = fileContent.find("=")
+        index += 2
+        print fileContent
+        soundVolume = float(fileContent[index:index + 4])
+        # From the first digit of the value to the last digit.
+        index = fileContent.find("=", index + 4)
+        index += 2
+        musicVolume = float(fileContent[index:index + 4])
 
-    index = fileContent.find("=")
-    index += 2
-    print fileContent[index:index + 3]
-    soundVolume = float(fileContent[index:index + 4])
-    # From the first digit of the value to the last digit.
+        return soundVolume, musicVolume
+    else:
+        setConfig((1.0,1.0))
 
-    index = fileContent.find("=", index + 4)
-    index += 2
-    musicVolume = float(fileContent[index:index + 4])
-
-    return soundVolume, musicVolume
-
-
-def setConfig(fileName, parameters):
+def setConfig(parameters):
     """Example:
     setConfig("config.txt", (sound,music)) """
 
-    pathName = os.path.join(os.getcwd(), fileName)
     sound = parameters[0]
     music = parameters[1]
     if len(str(sound)) <= 4:
@@ -82,7 +113,7 @@ def setConfig(fileName, parameters):
     print "Sound : ", sound
     print "Music : ", music
 
-    fileObject = open(pathName, "w")
+    fileObject = open(checkPath(), "w")
     soundContent = "sound = " + str(sound) +\
                     "\nmusic = " + str(music)
 

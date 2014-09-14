@@ -1,35 +1,52 @@
-1.3.7:
-    + 6 Cards added.
-    * New function to save the state, will be efficient in next release to
-        play later.
-    * Some code modification to clean up things.
+2014-09-14  Kevin Pellet ilphrin@autistici.org
 
-1.3.6:
-    + Added elementaries on few Cards.
-    + Four new Cards, Clementine, Dosbox, Freemind and Wine
-    + Added Credits in About
-    + Added a new effect sound, when doing a clic on the Menu
+    * Merged README.md, README.txt and INFO.txt into README
+    * CHANGES : Changed format of the file.
+    * images/ : Added image.txt
+    * functions.py (checkPath) : New function to check the path name of config
+      file.
+      (configExist) : New function to create a config folder in /home
+      (setConfig, readFile) : transfered file checking to configExist and
+      checkPath.
 
-1.3.5:
-    * Changed size of the in-game About.
-    * Changed font
-    * Changed music
+2014-09-07  Kevin Pellet ilphrin@autistici.org
+    * cards/ : 6 Cards added.
+    * Field.py (saveState) : Function to save the state of the game.
+    * Some code clean up.
+
+2014-08-22  Kevin Pellet ilphrin@autistici.org
+    * cards/ : Added elementaries on few Cards.
+      Four new Cards, Clementine, Dosbox, Freemind and Wine
+    * Menu.py (about) : Added Credits.
+    * sounds/ : Added a new effect sound, when doing a clic on the Menu
+    * Menu.py (clicked, play, options, about) : added self.sound.clicMenu.play
+      to play a sound when user clicked on the Menu.
+
+2014-08-19  Kevin Pellet ilphrin@autistici.org
+    * About.py (init) : Changed size of the in-game About.
+    * fonts/ : Changed font
+    * music/ : Changed music
     * Some code and bug fixes
-    + Added the About entry in the main Menu, to see all card's About
+    * Menu.py (main) : Added the About entry in the main Menu
+    * (about) : New function to see all card's About
 
-1.3:
-	* Fix a bug where sound wasn't saved in the right way and then made the
-	game crash.
-	* Changed names: 
-	    -listeCartes.py --> listOfCards.py
-	    -cartes (listOfcards.py) --> allcards
-	    -menu.py --> game.py
-	* Create a 'Text' object to handle...text
-		* Changed code in Menu.py and game.py to use Text objects instead of
-		lists.
+2014-08-15  Kevin Pellet ilphrin@autistici.org
+
+	* functions.py (setconfig, getConfig) Fix a bug where sound wasn't saved
+	  in the right way and then made the game crash.
+	* listeCartes.py : Changed name to listOfCards.py
+	* listofCards.py (cartes) : Variable name changed to allcards.
+	* menu.py : Changed name to game.py
+	* Text.py : Create a 'Text' object to handle text.
+	* Menu.py : Changed code to use Text objects instead of lists.
+	* game.py : Changed code to use Text objects instead of lists.
 	* Few little fixes.
 	* Started implementation of gettext to add translations. WIP
-	+ Add an animation for a captured card.
-	+ Add information about cards. Do a right-click on a card to see the About
-	  pop-up.
-	+ Add a sub-menu for future updates. Hot Seat is the only one working
+	* game.py (capturedAnimation) : Play an animation for a captured card.
+	  (changeOwner) : Runs capturedAnimation at the end.
+	* game.py (showAbout) : Show information about cards. Do a right-click on 
+	  a card to see the About pop-up.
+	  (main) : Runs showAbout if pygame gets a right-click event.
+	* Menu.py (play): Add a sub-menu for future updates. Hot Seat is the only
+	  one working for now.
+
