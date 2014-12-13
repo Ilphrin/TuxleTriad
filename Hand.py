@@ -6,9 +6,8 @@ from pygame.locals import *
 
 
 class Hand():
-    """Crée une liste de cartes"""
+    """Create a list of cards, and places it"""
     def __init__(self, cards, player):
-        # Create a list of cards
         self.cards = cards
         # Coefficient for coord-Y of the cards
         I = 0

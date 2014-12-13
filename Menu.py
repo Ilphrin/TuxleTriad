@@ -10,6 +10,7 @@ from pygame.locals import *
 from game import Application
 from Sound import Sound
 from Text import Text
+from Buttons import Button
 from listOfCards import *
 from Card import Card
 pygame.init()
@@ -22,32 +23,20 @@ class Menu(pygame.sprite.Sprite):
         # We create the window
         self.width = width
         self.height = height
-        fullscreen = 0
+        fullscreen = pygame.NOFRAME
         self.dimension = (self.width, self.height)
         self.screen = pygame.display.set_mode(self.dimension,  fullscreen)
         pygame.display.set_caption("TuxleTriad")
 
         self._load_translation()
 
-        elemText = [_("Play"), _("Options"), _("Rules"), _("About"),
-                         _("Quit Game")]
-        self.menu = []
-        for elem in elemText:
-            self.menu.append(Text(elem, self.FONT, white, 40))
-
-        posx = 400
-        posy = 400 - (60 * len(elemText))
-
-        for elem in self.menu:
-            elem.rect.center = ((posx, posy))
-            posy += 100
 
         self.bkgrnd, self.bkgrndRect = loadImage("background.jpg")
         self.bkgrndRect = self.bkgrnd.get_rect()
 
         # The Clock of the game, to manage the frame-rate
         self.clock = pygame.time.Clock()
-        self.fps = 60
+        self.fps = 80
 
         # We start the Sound object, playing music and sounds.
         self.sound = Sound()
@@ -59,40 +48,63 @@ class Menu(pygame.sprite.Sprite):
         self.main()
 
     def main(self):
+        elemText = [_("Play"), _("Options"), _("Rules"), _("About"),
+                         _("Quit Game")]
+        self.menu = []
+        for elem in elemText:
+            self.menu.append(Text(elem, self.FONT, white, 40))
+        posx = 400
+        posy = 400 - (60 * len(elemText))
+        for elem in self.menu:
+            elem.rect.center = ((posx, posy))
+            posy += 100
         pygame.event.clear()
-        while 1:
-            self.screen.blit(self.bkgrnd, self.bkgrndRect)
-            for i in range(len(self.menu)):
-                self.screen.blit(self.menu[i].surface, self.menu[i].rect)
 
+        while 1:
+            self.updateMenu()
             for event in pygame.event.get():
                 if event.type == MOUSEBUTTONUP:
                     self.clicked()
                 elif event.type == QUIT:
                     self.quitGame()
-
             pygame.display.flip()
             self.clock.tick(self.fps)
+
+    def updateMenu(self):
+        self.screen.blit(self.bkgrnd, self.bkgrndRect)
+        for i in range(len(self.menu)):
+            self.screen.blit(self.menu[i].surface, self.menu[i].rect)
 
     def quitGame(self):
         setConfig(self.sound.volume)
         pygame.quit()
         sys.exit()
+    
+    def oldMenu(self):
+        while(1):
+            for button in self.menu:
+                button.rect.centerx -= 25
+                if (button.rect.centerx <= - 700):
+                    return;
+            self.updateMenu()
+            pygame.display.flip()
 
     def clicked(self):
         for button in self.menu:
             if button.rect.collidepoint(pygame.mouse.get_pos()):
                 self.sound.clicMenu.play()
+                if button.text == _(u"Quit Game"):
+                    self.quitGame()
+                self.oldMenu()
                 if button.text == _(u"Play"):
                     self.play()
                 elif button.text == _(u"Options"):
                     self.options()
                 elif button.text == _(u"Rules"):
-                    print "Rules!"
+                    self.rules()
                 elif button.text == _(u"About"):
                     self.about()
-                elif button.text == _(u"Quit Game"):
-                    self.quitGame()
+                self.main()
          
 
     def play(self):
@@ -108,16 +120,13 @@ class Menu(pygame.sprite.Sprite):
                         (550, 500)]
         else:
             textPos = [(250, 100), (250,200), (250, 300), (550, 500)]
-        elements = []
-        
+        self.menu = []
         for i in range(length):
-            elements.append(Text(texts[i], self.FONT, white, 45))
-            elements[i].rect.topleft = textPos[i]
+            self.menu.append(Text(texts[i], self.FONT, white, 45))
+            self.menu[i].rect.topleft = textPos[i]
             
         while 1:
-            self.screen.blit(self.bkgrnd, self.bkgrndRect)
-            for i in range(length):
-                self.screen.blit(elements[i].surface, elements[i].rect)
+            self.updateMenu()
             pygame.display.flip()
             
             for event in pygame.event.get():
@@ -127,29 +136,30 @@ class Menu(pygame.sprite.Sprite):
                 elif event.type == MOUSEBUTTONUP:
                     coordinates = pygame.mouse.get_pos()
                     for i in range(length):
-                        if elements[i].rect.collidepoint(coordinates):
+                        if self.menu[i].rect.collidepoint(coordinates):
                             self.sound.clicMenu.play()
-                            if elements[i].text == _("Adventure"):
-                                print "Adventure!"
-                            elif elements[i].text == _("Solo"):
-                                print "Solo!"
-                            elif elements[i].text == _("Hot Seat"):
+                            self.oldMenu()
+                            if self.menu[i].text == _("Adventure"):
+                                return
+                            elif self.menu[i].text == _("Solo"):
+                                return
+                            elif self.menu[i].text == _("Hot Seat"):
                                 self.hotSeat()
-                            elif elements[i].text == _("Back"):
-                                self.main()
-                            elif elements[i].text == _("Continue"):
+                            elif self.menu[i].text == _("Back"):
+                                return
+                            elif self.menu[i].text == _("Continue"):
                                 self.app.main()
                     
     def options(self):
         pygame.event.clear()
-        texts = [_(u"Audio"), _(u"Sounds"), _(u"Music"), _(u"Back")]
+        texts = [_("Audio"), _("Sounds"), _("Music"), _("Back")]
         length = len(texts)
-        textsPos = [(320, 100), (100, 200), (100, 300), (500, 450)]
-        elements = []
+        textsPos = [(320, 100), (100, 200), (100, 300), (550, 500)]
+        self.menu = []
 
         for i in range(length):
-            elements.append(Text(texts[i], self.FONT, white, 50))
-            elements[i].rect.topleft = textsPos[i]
+            self.menu.append(Text(texts[i], self.FONT, white, 50))
+            self.menu[i].rect.topleft = textsPos[i]
 
         bar1, bar1Rect = loadImage("barSound.jpg")
         bar2, bar2Rect = loadImage("barSound.jpg")
@@ -181,7 +191,7 @@ class Menu(pygame.sprite.Sprite):
             self.screen.blit(cursor1, cursors[0])
             self.screen.blit(cursor2, cursors[1])
             for i in range(length):
-                self.screen.blit(elements[i].surface, elements[i].rect)
+                self.screen.blit(self.menu[i].surface, self.menu[i].rect)
 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -216,13 +226,15 @@ class Menu(pygame.sprite.Sprite):
                                 self.screen.blit(cursor1, cursors[0])
                                 self.screen.blit(cursor2, cursors[1])
                                 for j in range(4):
-                                    self.screen.blit(elements[j].surface,\
-                                                      elements[j].rect)
+                                    self.screen.blit(self.menu[j].surface,\
+                                                      self.menu[j].rect)
                                 pygame.display.flip()
 
-                    if elements[3].rect.collidepoint((mousex, mousey)):
+                    if self.menu[3].rect.collidepoint((mousex, mousey)):
+                        del bar1, bar2, bars, cursor1, cursor2, cursors
+                        self.oldMenu()
                         self.sound.clicMenu.play()
-                        self.main()
+                        return
 
                 pygame.display.update()
                 
@@ -234,7 +246,7 @@ class Menu(pygame.sprite.Sprite):
         for number in range(len(allCards)):
             pageList.append(Card(number, 1))
             index += 1
-            if index == 3 :
+            if index == 3 or number == (len(allCards) or len(allCards)-1):
                 allPage.append(pageList)
                 del pageList
                 pageList = []
@@ -243,11 +255,13 @@ class Menu(pygame.sprite.Sprite):
         maxPage = len(allPage)
         txtPage = str(page) + "/" + str(maxPage)
 
-        navigation = [_("Back"), _("Next"), _("Quit"), "Programming:", 
-                    "Kevin \"Ilphrin\" Pellet", "Graphics:", "Yunero Kisapsodos", txtPage]
+        navigation = [_("Back"), _("Next"), _("Quit"),
+                    "Programming:", "Kevin \"Ilphrin\" Pellet",
+                    "Graphics:", "Yunero Kisapsodos",
+                    txtPage]
         navigationPos = [(80,550), (650,550), (660,40), (630, 100),
                     (640, 130), (630, 200), (640, 230), (350,550)]
-        elements = []
+        self.menu = []
         for i in range(len(navigation)):
             if 2 < i < 7:
                 size = 12
@@ -255,14 +269,14 @@ class Menu(pygame.sprite.Sprite):
             else:
                 font = self.FONT
                 size = 30
-            elements.append(Text(navigation[i], font, white, size))
-            elements[i].rect.topleft = navigationPos[i]
+            self.menu.append(Text(navigation[i], font, white, size))
+            self.menu[i].rect.topleft = navigationPos[i]
 
         cardPos = [(50,50), (50,200), (50, 350)]
 
         while 1:
             self.screen.blit(self.bkgrnd, self.bkgrndRect)
-            for element in elements:
+            for element in self.menu:
                 self.screen.blit(element.surface,element.rect)
 
             for elem in range(len(allPage[page-1])):
@@ -278,7 +292,7 @@ class Menu(pygame.sprite.Sprite):
                 if event.type == MOUSEBUTTONUP:
                     coords = pygame.mouse.get_pos()
                     
-                    for button in elements:
+                    for button in self.menu:
                         if button.rect.collidepoint(coords):
                             self.sound.clicMenu.play()
                             if button.text == _("Back"):
@@ -288,21 +302,95 @@ class Menu(pygame.sprite.Sprite):
                                 if page < maxPage:
                                     page += 1
                             if button.text == _("Quit"):
-                                self.main()
+                                self.oldMenu()
+                                return
                             txtPage = str(page) + "/" + str(maxPage)
-                            elements[7] = Text(txtPage, self.FONT, white, 30)
-                            elements[7].rect.topleft = navigationPos[7]
+                            self.menu[7] = Text(txtPage, self.FONT, white, 30)
+                            self.menu[7].rect.topleft = navigationPos[7]
                 if event.type == QUIT:
                     self.quitGame()
 
             pygame.display.flip()
-           
+            
+    def rules(self):
+        tutorialButton = Button(_(u"Tutorial"), self.FONT, white)
+        howtoButton = Button(_(u"How To"), self.FONT, white)
+        backButton = Button(_(u"Back"), self.FONT, white)
+        
+        tutorialButton.rect.topleft = (250, 100)
+        howtoButton.rect.topleft = (250, 200)
+        backButton.rect.topleft = (550, 500)
+        self.menu = []
+        self.menu.append(tutorialButton)
+        self.menu.append(howtoButton)
+        self.menu.append(backButton)
+        
+        while (1):
+            self.updateMenu()
+            for event in pygame.event.get():
+                if event.type == MOUSEBUTTONUP:
+                    coords = pygame.mouse.get_pos()
+                    for i in range(len(self.menu)):
+                        if self.menu[i].rect.collidepoint(coords):
+                            self.oldMenu()
+                            if self.menu[i].text == _(u"Tutorial"):
+                                self.main()
+                            elif self.menu[i].text == _(u"How To"):
+                                self.HowTo()
+                                return
+                            elif self.menu[i].text == _(u"Back"):
+                                self.main()
+                elif event.type == QUIT:
+                    self.quitGame()
+            pygame.display.flip()
+             
+    def HowTo(self):
+        backButton = Button(_("Back"), self.FONT, white)
+        prevButton = Button(_("Prev"), self.FONT, white)
+        nextButton = Button(_("Next"), self.FONT, white)
+        page = 1
+        maxPage = 2
+        pageList = []
+        for i in range(maxPage):
+            pageList.append(pygame.image.load(getHowTo(i)))
+        
+        pageRect = pageList[i - 1].get_rect()
+        pageRect.topleft = (-20, 0)
+        backButton.rect.topleft = (600, 40)
+        prevButton.rect.topleft = (80, 550)
+        nextButton.rect.topleft = (660, 550)
+        self.menu = []
+        self.menu.append(backButton)
+        self.menu.append(prevButton)
+        self.menu.append(nextButton)
+                
+        while (1):
+            self.updateMenu()
+            self.screen.blit(pageList[page - 1], pageRect)
+
+            for event in pygame.event.get():
+                if event.type == MOUSEBUTTONUP:
+                    coords = pygame.mouse.get_pos()
+                    if backButton.rect.collidepoint(coords):
+                        self.oldMenu()
+                        return
+                    elif prevButton.rect.collidepoint(coords) and page > 1:
+                        page -= 1
+                    elif nextButton.rect.collidepoint(coords) and page < maxPage:
+                        page += 1
+                elif event.type == QUIT:
+                    self.quitGame()
+            pygame.display.flip()
+            
+        
+        
     def _load_translation(self):
-        base_path = os.path.dirname(os.path.dirname(sys.argv[0]))
+        base_path = os.getcwd()
         directory = os.path.join(base_path, 'translations')
+        print "Loading translations at: ", directory
         
         params = {
-                    'domain': 'TuxleTriad',
+                    'domain': 'tuxle-triad',
                     'fallback': True
                  }
         
@@ -312,7 +400,7 @@ class Menu(pygame.sprite.Sprite):
         translation = gettext.translation(**params)
         
         translation.install("ngettext")
-        
+
     def solo(self):
         """1vsIA mode"""
         print "Solo!"
@@ -325,8 +413,8 @@ class Menu(pygame.sprite.Sprite):
         """1vs1 mode"""
         if self.app != None:
             del self.app
-            Application(800, 600, self.screen, self.sound, self)
+            Application(800, 600, self.screen, self.sound, self).main()
         else:
-            Application(800, 600, self.screen, self.sound, self)
+            Application(800, 600, self.screen, self.sound, self).main()
 
 Menu(800, 600)

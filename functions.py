@@ -27,7 +27,6 @@ def getFont(fontName, size):
     font = pygame.font.Font(os.path.join(os.getcwd(), "fonts", fontName), size)
     return font
 
-
 def readFile():
     """Example:
     file = readFile("myFile.txt") """
@@ -54,7 +53,6 @@ def configExist():
     is a configuration folder in ~/.config"""
     
     currentPath = os.getcwd()
-    print currentPath
     if ("/usr" or "/opt") in currentPath:
         pathName = os.path.expanduser("~/.config/tuxle-triad/")
         
@@ -75,7 +73,6 @@ def getConfig(fileContent):
     if configExist():
         index = fileContent.find("=")
         index += 2
-        print fileContent
         soundVolume = float(fileContent[index:index + 4])
         # From the first digit of the value to the last digit.
         index = fileContent.find("=", index + 4)
@@ -126,3 +123,10 @@ def getCard(card):
     if card.owner == -1:
         File = os.path.join(os.getcwd(), "cards/" + card.name + "R.jpg")
         card.image = pygame.image.load(File)
+
+def getHowTo(page):
+    if page == 0:
+        File = os.path.join(os.getcwd(), "howTo/First.png")
+    elif page == 1:
+        File = os.path.join(os.getcwd(), "howTo/Second.png")
+    return File

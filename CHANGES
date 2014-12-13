@@ -1,5 +1,23 @@
-2014-09-14  Kevin Pellet ilphrin@autistici.org
+2014-12-XX Kevin Pellet ilphrin@autistici.org
+    * Rules.py (elementary) : New function to play with elements
+    * Field.py (drawElements) : New function to draw element's icon on each
+      cases of the field. 
+    * Card.py (addModifer) : New function to apply modifications to values
+    * game.py (putCard) : Added elementary verification and cleaned code
+                          Selected card now slowly translate to the center.
+      (capturedAnimation) : Now re-draw the bonus when changing card's owner
+      (showAbout) : Do not print width anymore.
+                    Background color depends of card's owner
+      (__init__) : Stopped launching directly main().
+    * Menu.py (_load_translations) : It's now possible to use gettext for 
+      doing your own translations.
+      (hotSeat) : Run Application.main() now.
+    * functions.py (configExists) : Changed the print output.
+    * listOfcards.py : 6 Cards added.
+    * Sound.py : New function to manage element sound effect.
+    * Menu.py : New function to do an animation in the menu.
 
+2014-09-14  Kevin Pellet ilphrin@autistici.org
     * Merged README.md, README.txt and INFO.txt into README
     * CHANGES : Changed format of the file.
     * images/ : Added image.txt
@@ -31,7 +49,6 @@
     * (about) : New function to see all card's About
 
 2014-08-15  Kevin Pellet ilphrin@autistici.org
-
 	* functions.py (setconfig, getConfig) Fix a bug where sound wasn't saved
 	  in the right way and then made the game crash.
 	* listeCartes.py : Changed name to listOfCards.py

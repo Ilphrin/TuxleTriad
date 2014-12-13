@@ -3,6 +3,8 @@
 import pygame
 import sys
 from pygame.locals import *
+from Rules import *
+from functions import *
 
 
 class Field():
@@ -14,7 +16,8 @@ class Field():
         self.width = width * 5 / 7
         self.height = height * 4 / 5
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.surface = pygame.Surface((self.width, self.height))
+        self.surface = pygame.Surface((self.width, self.height), SRCALPHA)
+        
         x = 92
         y = 60
         self.positions = [
@@ -25,6 +28,13 @@ class Field():
             # Third line
             (2.53 * x, 6.4 * y), (3.75 * x, 6.4 * y), (4.98 * x, 6.4 * y)
             ]
+        
+        self.elementName = []
+        self.elements = []
+        self.elementSound = []
+        elementary(self)
+        self.drawElements()
+        
         self.fieldRects = []
         self.fieldSurf = []
         lineField = []
@@ -46,7 +56,6 @@ class Field():
         filled = 0
         
         for line in self.fieldRects:
-            #print line
             for rect in line:
                 filled = 0
                 for card in self.boss.player1Hand.cards:
@@ -63,6 +72,22 @@ class Field():
 
             self.state.append(self.line)
             self.line = []
-            
-        for line in self.state:
-            print line
+    
+    def drawElements(self):
+        """Will draw the elements on the Field"""
+        
+        for i in range(9):
+            if self.elementName[i] != None:
+                elementSurf, elementRect = loadElement(self.elementName[i])
+                elementRect.topright= \
+                    self.positions[i]
+                elementRect.move_ip(-40,-30)
+                self.elements.append((elementSurf, elementRect))
+            else:
+                self.elements.append(None)
+        self.update()
+                
+    def update(self):
+        for elem in self.elements:
+            if elem != None:
+                self.surface.blit(elem[0] ,elem[1])

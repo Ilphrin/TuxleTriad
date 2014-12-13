@@ -16,12 +16,12 @@ class About():
         fileObject = open(directory, "r")
         
         white = (255,255,255)
-        
         font = "rimouski sb.ttf"
 
         self.name = Text(fileObject.readline()[:-1], font, white, 18)
         self.nameRect = self.name.get_rect()
         self.nameRect.topleft = (5,5)
+        # Description must be in length less than 66 characters
         self.description = Text(fileObject.readline()[:-1], font, white, 14)
         self.descriptionRect = self.description.get_rect()
         self.descriptionRect.topleft = (5, 30)
@@ -31,8 +31,7 @@ class About():
         self.license = Text(fileObject.readline()[:-1], font, white, 12)
         self.licenseRect = self.license.get_rect()
         self.licenseRect.topleft = (135, 120)
-
-        self.surface = pygame.Surface((450, 140), HWSURFACE).convert_alpha()
+        self.surface = pygame.Surface((450, 140), SRCALPHA)
         self.surface.fill((0,0,0,125))
         self.rect = self.surface.get_rect()
         self.surface.blit(self.name.surface, self.nameRect)

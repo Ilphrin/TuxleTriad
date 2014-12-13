@@ -4,21 +4,20 @@
 # To use them, we will just import the file in the application and
 # get the return values.
 
-
 def adjacent(card, others):
-    # Classic rule, compare the card put with the others already here, and
-    # return the ones that need to be changed.
+    """Classic rule, compare the card put with the others already here, and
+     return the ones that need to be changed."""
     returnList = []
-    if others[0] != None and card.top > others[0].bottom:
+    if others[0] != None and card.values[0] > others[0].values[2]:
         # The card on the top
         returnList.append(others[0])
-    if others[1] != None and card.right > others[1].left:
+    if others[1] != None and card.values[1] > others[1].values[3]:
         # The card on the right
         returnList.append(others[1])
-    if others[2] != None and card.bottom > others[2].top:
+    if others[2] != None and card.values[2] > others[2].values[0]:
         # The card on the bottom
         returnList.append(others[2])
-    if others[3] != None and card.left > others[3].right:
+    if others[3] != None and card.values[3] > others[3].values[1]:
         # The card on the left
         returnList.append(others[3])
     return returnList
@@ -33,10 +32,21 @@ def adjacent(card, others):
     #a combination, the results are the same. If it is, then all cards
     #are won by the player who put the card
 
-#def elementary():
-    # Règle supplémentaire. On génère des éléments
-    #aléatoirement à chaque position et on les place
-    #sur les cases.
+def elementary(Field):
+    """Optional Rule. Generate element randomly on each case of the Field."""
+    
+    import random
+    
+    listElement = ['earth', 'fire', 'holy', 'ice', 'poison', 'thunder',
+                    'water', 'wind', None, None, None, None, None, None, None,
+                    None, None, None, None]
+    # There is 'None' x time to give more chance that there isn't element
+
+    for i in range(0,9):
+        element = random.randint(0, len(listElement)-1)
+        Field.elementName.append(listElement[element])
+    for i in range(0,9):
+        Field.elementSound.append(listElement[i])
 
 
 #def style():

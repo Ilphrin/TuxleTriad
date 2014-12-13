@@ -1,0 +1,90 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: tuxle-triad 1.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-09-20 13:02+0200\n"
+"PO-Revision-Date: 2014-09-22 12:11+0100\n"
+"Last-Translator: \n"
+"Language-Team: Ilphrin <ilphrin@autistici.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"Language: fr_FR\n"
+
+#: game.py:448
+msgid "Blue win!"
+msgstr "Bleu gagne!"
+
+#: game.py:451
+msgid "Red win!"
+msgstr "Rouge gagne!"
+
+#: game.py:454
+msgid "Equality!"
+msgstr "Égalité!"
+
+#: Menu.py:32 Menu.py:86
+msgid "Play"
+msgstr "Jouer"
+
+#: Menu.py:32 Menu.py:88
+msgid "Options"
+msgstr "Options"
+
+#: Menu.py:32 Menu.py:90
+msgid "Rules"
+msgstr "Règles"
+
+#: Menu.py:32 Menu.py:92
+msgid "About"
+msgstr "À propos"
+
+#: Menu.py:33 Menu.py:94
+msgid "Quit Game"
+msgstr "Quitter le jeu"
+
+#: Menu.py:101 Menu.py:140
+msgid "Continue"
+msgstr "Continuer"
+
+#: Menu.py:101 Menu.py:104 Menu.py:132
+msgid "Adventure"
+msgstr "Aventure"
+
+#: Menu.py:101 Menu.py:104 Menu.py:134
+msgid "Solo"
+msgstr "Solo"
+
+#: Menu.py:102 Menu.py:104 Menu.py:136
+msgid "Hot Seat"
+msgstr "Chaise tournante"
+
+#: Menu.py:102 Menu.py:104 Menu.py:138 Menu.py:145 Menu.py:246 Menu.py:285
+msgid "Back"
+msgstr "Précédent"
+
+#: Menu.py:145
+msgid "Audio"
+msgstr "Audio"
+
+#: Menu.py:145
+msgid "Sounds"
+msgstr "Sons"
+
+#: Menu.py:145
+msgid "Music"
+msgstr "Musique"
+
+#: Menu.py:246 Menu.py:288
+msgid "Next"
+msgstr "Suivant"
+
+#: Menu.py:246 Menu.py:291
+msgid "Quit"
+msgstr "Quitter"

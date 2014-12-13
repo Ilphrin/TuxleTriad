@@ -1,4 +1,4 @@
 Pidgin
-A chat program which lets you log in to accounts on multiple chat networks simultaneously.
-
+A chat program to log in to multiple chat networks simultaneously.
+1998
 GNU GPL
