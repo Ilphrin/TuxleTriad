@@ -51,7 +51,17 @@ allCards = [
     "Freemind",
     "Latex",
     "Pidgin",
-    "Visualboyadvance"
+    "Visualboyadvance",
+    "Docker",
+    "fileZilla",
+    "Gecko",
+    "Gens",
+    "goeGebra",
+    "html5",
+    "Jenkins",
+    "rolisteam",
+    "Drupal",
+    "Unvanquished"
     ]
 values = [
     ['A', '4', '6', '9', None, None],
@@ -99,5 +109,15 @@ values = [
     ['8', '4', '4', '8', None, None],
     ['7', '5', '8', '1', None, None],
     ['1', '8', '4', '8', None, None],
-    ['6', '5', '4', '8', None, None]
+    ['6', '5', '4', '8', None, None],
+    ['4', '8', '5', '6', None, None],
+    ['7', '2', '8', '5', None, None],
+    ['2', '8', '8', '4', None, None],
+    ['7', '8', '3', '4', None, None],
+    ['4', '8', '7', '3', None, None],
+    ['8', '2', '8', '2', None, None],
+    ['6', '8', '4', '5', None, None],
+    ['1', '8', '8', '3', "Poison", None],
+    ['4', '6', '7', '6', None, None],
+    ['6', '6', '2', '7', None, None]
     ]
