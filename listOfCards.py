@@ -51,7 +51,7 @@ allCards = [
     "Freemind",
     "Latex",
     "Pidgin",
-    "Visualboyadvance"
+    "Visualboyadvance",
     "Docker",
     "fileZilla",
     "Gecko",
