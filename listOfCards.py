@@ -59,7 +59,9 @@ allCards = [
     "goeGebra",
     "html5",
     "Jenkins",
-    "rolisteam"
+    "rolisteam",
+    "Drupal",
+    "Unvanquished"
     ]
 values = [
     ['A', '4', '6', '9', None, None],
@@ -115,5 +117,7 @@ values = [
     ['4', '8', '7', '3', None, None],
     ['8', '2', '8', '2', None, None],
     ['6', '8', '4', '5', None, None],
-    ['1', '8', '8', '3', "Poison", None]
+    ['1', '8', '8', '3', "Poison", None],
+    ['4', '6', '7', '6', None, None],
+    ['6', '6', '2', '7', None, None]
     ]
