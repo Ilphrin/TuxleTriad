@@ -1,0 +1,4 @@
+GeoGebra
+A multi-platform mathematics software
+2008
+GNU GPL, cc-by-nc

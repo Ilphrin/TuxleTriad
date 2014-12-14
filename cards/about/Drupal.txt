@@ -1,0 +1,4 @@
+Drupal
+A free and open-source content-management framework written in PHP
+January 2001
+GNU GPLv2+

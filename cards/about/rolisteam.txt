@@ -1,0 +1,4 @@
+Rolisteam
+A Role Playing Game manager
+23 December 2013
+GNU GPLv2+

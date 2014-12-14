@@ -1,0 +1,4 @@
+Gens
+A free Sega emulator
+1994
+GNU GPL

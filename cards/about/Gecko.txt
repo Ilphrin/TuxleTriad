@@ -1,0 +1,4 @@
+Mozilla Project
+A layout engine developed by the Mozilla Project.
+1998
+MGL / GPL / LGPL

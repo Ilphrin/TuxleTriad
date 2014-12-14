@@ -1,0 +1,4 @@
+Unvanquished
+A multi-player team-based first-person shooter and real-time strategy game
+GNU GPLv3+
+2012

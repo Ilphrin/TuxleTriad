@@ -50,7 +50,6 @@ class Sound():
     def playElement(self, element):
         self.element = os.path.join(self.folder, "sounds", "Elements",
             (element + ".ogg"))
-        print self.element
         if not pygame.mixer.get_busy():
             self.element = pygame.mixer.Sound(self.element)
             self.Channel.play(self.element)

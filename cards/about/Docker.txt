@@ -1,0 +1,4 @@
+Docker
+An open-source project to automate the deployment of applications
+13 March 2013
+Apache License 2.0
