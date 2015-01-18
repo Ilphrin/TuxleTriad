@@ -28,6 +28,7 @@ class  Player():
 
     coords = pygame.mouse.get_pos()
     if application.getCard(application.player):
+      application.CARD.addCursor()
       application.selectedCard()
       if not application.CARD == None:
         # If we clicked on a card.
@@ -155,9 +156,15 @@ class Application():
 
         for card in self.player1Hand.cards:
             self.screen.blit(card.image, card.rect)
+            if card == self.CARD:
+              self.CARD.borderRect.topleft = self.CARD.rect.topleft
+              self.screen.blit(self.CARD.border, self.CARD.borderRect)
 
         for card in self.player2Hand.cards:
             self.screen.blit(card.image, card.rect)
+            if card == self.CARD:
+              self.CARD.borderRect.topleft = self.CARD.rect.topleft
+              self.screen.blit(self.CARD.border, self.CARD.borderRect)
 
         self.scorePlayer1.update()
         self.scorePlayer2.update()
@@ -167,7 +174,7 @@ class Application():
             self.winner.changeText()
             self.screen.blit(self.winner.surface, self.winner.rect)
 
-        if self.selectedCardName != 0:
+        if self.selectedCardName != 0: 
             self.showName(1)
             self.showName(-1)
 

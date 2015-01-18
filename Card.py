@@ -51,7 +51,6 @@ class Card(pygame.sprite.Sprite):
             self.elementRect.move_ip(-2, 2)
             self.image.blit(self.element, self.elementRect)
 
-
     def changeOwner(self):
         getCard(self)
         self.image.set_alpha()
@@ -78,9 +77,7 @@ class Card(pygame.sprite.Sprite):
     def addCursor(self):
         """Add a colored border to the focused card"""
         
-        self.border, self.borderRect = loadImage("border.png")
-        self.borderRect.move_ip(0, 0)
-        self.image.blit(self.border, self.borderRect)
+        self.border, self.borderRect = loadImage("images/border.png")
 
     def parseToInt(self):
         for i in range(0, 4):
