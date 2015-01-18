@@ -27,7 +27,12 @@ class  Player():
     """When player has to play a card"""
 
     coords = pygame.mouse.get_pos()
-    if application.getCard(application.player):
+    if application.CARD != None:
+        print "coucou"
+        if application.CARD.rect.collidepoint(coords):
+            return
+    isCard = application.getCard(application.player)
+    if isCard:
       application.CARD.addCursor()
       application.selectedCard()
       if not application.CARD == None:
@@ -228,46 +233,6 @@ class Application():
 
             pygame.display.flip()
             self.clock.tick(self.fps)
-
-    def playCard(self):
-        """When player has to play a card"""
-
-        coords = pygame.mouse.get_pos()
-
-        if self.getCard(self.player):
-            self.selectedCard()
-        if not self.CARD == None:
-        # If we clicked on a card.
-        # We wait for the event 'MOUSEBUTTONUP', so first we clean the
-        #queue event. Then we deactivate the MOUSEMOTION event, because
-        #it causes the card to be put randomly on the field!
-        #We wait an event, for example a touch on the keyboard
-        #pressed, or MOUSEBUTTONUP, but not only, and we reactivate
-        #MOUSEMOTION, we could need it later.
-            self.deactivate()
-            if not self.animation:
-                pygame.event.wait()
-            while pygame.event.peek(MOUSEBUTTONUP) and not self.animation:
-                pass
-            self.reactivate()
-            # If the player clicked on the field this time, we test
-            #each cases of the Field.
-            FieldRect = self.field.fieldRects
-            if self.field.rect.collidepoint(pygame.mouse.get_pos()):
-                for line in range(len(FieldRect)):
-                    for case in range(len(FieldRect[line])):
-                        if FieldRect[line][case]\
-                                .collidepoint(pygame.mouse.get_pos()):
-                            self.Case = self.field.fieldRects[line][case]
-                            if not self.caseFilled():
-                                self.numberCase = (line*3)+case
-                                self.animation = 1
-                                self.putCard()
-                                self.cardsOwner()
-                            return
-            else:
-                self.deselectedCard()
-                self.CARD = None
 
     def putCard(self):
         """Animation of a card put on the field"""
@@ -486,11 +451,15 @@ class Application():
         if player == 1:
             for card in self.player1Hand.cards:
                 if card.rect.collidepoint(coords) and card.inHand:
+                    if self.CARD != None:
+                        self.deselectedCard()
                     self.CARD = card
                     return 1
         elif player == -1:
             for card in self.player2Hand.cards:
                 if card.rect.collidepoint(coords) and card.inHand:
+                    if self.CARD != None:
+                        self.deselectedCard()
                     self.CARD = card
                     return 1
         elif player == 0:
