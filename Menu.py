@@ -83,7 +83,7 @@ class Menu(pygame.sprite.Sprite):
     def oldMenu(self):
         while(1):
             for button in self.menu:
-                button.rect.centerx -= 25
+                button.rect.centerx -= 20
                 if (button.rect.centerx <= - 700):
                     return;
             self.updateMenu()

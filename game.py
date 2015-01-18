@@ -17,6 +17,61 @@ from listOfCards import allCards  # The list of all the cards
 from Text import Text
 pygame.init()
 
+class  Player():
+  """Class containing a player and his possible actions"""
+  def __init__(self, player):
+    self.player = player
+    self.hand = self.randomHand(player)
+
+  def playCard(self, application):
+    """When player has to play a card"""
+
+    coords = pygame.mouse.get_pos()
+    if application.getCard(application.player):
+      application.selectedCard()
+      if not application.CARD == None:
+        # If we clicked on a card.
+        # We wait for the event 'MOUSEBUTTONUP', so first we clean the
+        #queue event. Then we deactivate the MOUSEMOTION event, because
+        #it causes the card to be put randomly on the field!
+        #We wait an event, for example a touch on the keyboard
+        #pressed, or MOUSEBUTTONUP, but not only, and we reactivate
+        #MOUSEMOTION, we could need it later.
+        application.deactivate()
+        if not application.animation:
+          pygame.event.wait()
+          while pygame.event.peek(MOUSEBUTTONUP) and not application.animation:
+            pass
+          application.reactivate()
+          # If the player clicked on the field this time, we test
+          #each cases of the Field.
+          FieldRect = application.field.fieldRects
+          if application.field.rect.collidepoint(pygame.mouse.get_pos()):
+            for line in range(len(FieldRect)):
+              for case in range(len(FieldRect[line])):
+                if FieldRect[line][case]\
+                .collidepoint(pygame.mouse.get_pos()):
+                  application.Case = application.field.fieldRects[line][case]
+                  if not application.caseFilled():
+                    application.numberCase = (line*3)+case
+                    application.animation = 1
+                    application.putCard()
+                    application.cardsOwner()
+                    return
+                  else:
+                    application.deselectedCard()
+                    application.CARD = None
+
+  def randomHand(self, player):
+      """Get a random set of cards for 'player'. Return a Hand object"""
+      Cards = []
+      listCards = [card for card in range(len(allCards))]
+      random.shuffle(listCards)
+      for i in range(5):
+          number = listCards[0]
+          Cards.append(Card(number, player))
+          listCards.remove(number)
+      return Hand(Cards, player)
 
 class Application():
     """Main class of the game, manage the window"""
@@ -49,12 +104,16 @@ class Application():
         # The Clock of the game, to manage the frame rate
         self.clock = pygame.time.Clock()
         self.fps = 60
+        # Creation of two players
+        self.player1 = Player(1)
+        self.player2 = Player(-1)
+        self.players = {1 : self.player1, -1 : self.player2}
         # We generate two Hand and draw 5 cards from each
         # to have an entire Hand of Card
         # For player 1
-        self.player1Hand = self.randomHand(1)
+        self.player1Hand = self.player1.hand
         # For player 2
-        self.player2Hand = self.randomHand(-1)
+        self.player2Hand = self.player2.hand
 
         # We create the Score
         self.scorePlayer1 = Score("5", 1, self.width, self.height)
@@ -93,7 +152,7 @@ class Application():
         """Updates all the sprites on the window"""
         self.screen.blit(self.background, self.background.get_rect())
         self.screen.blit(self.field.surface, self.field.rect)
-        
+
         for card in self.player1Hand.cards:
             self.screen.blit(card.image, card.rect)
 
@@ -107,7 +166,7 @@ class Application():
         if self.winner.text != "":
             self.winner.changeText()
             self.screen.blit(self.winner.surface, self.winner.rect)
-        
+
         if self.selectedCardName != 0:
             self.showName(1)
             self.showName(-1)
@@ -116,7 +175,7 @@ class Application():
                 self.screen.blit(self.backCard, self.backCardRect)
                 self.screen.blit(self.cardName.surface, self.cardName.rect)
                 self.cardName = None
-        
+
         if self.infoCARD == None:
         # If we aren't showing the about popup. Because About need to blit one
         # more thing before doing the following commands.
@@ -145,7 +204,7 @@ class Application():
                             self.showAbout()
                     if self.winner.text == "" and event.button == 1:
                         self.infoCARD = None
-                        self.playCard()
+                        self.players[self.player].playCard(self)
                 elif event.type == QUIT:
                     audio = [self.Sound.soundVolume, self.Sound.musicVolume]
                     setConfig(audio)
@@ -232,8 +291,8 @@ class Application():
         if self.CARD.image.get_alpha() == 255 and self.sensAnimation == 1:
             # We have put the card on the field and the animation is over.
             # We compare the elements to give potential malus/bonus.
-            # And we have to look if that card captured some of the 
-            # ennemy's. 
+            # And we have to look if that card captured some of the
+            # ennemy's.
             self.animation = 0
             caseElement = self.field.elementName[self.numberCase]
             if caseElement != None:
@@ -388,7 +447,7 @@ class Application():
             card.rect = card.image.get_rect()
             card.rect.topleft = topleft
             self.update()
-        
+
         # If card has a bonus or malus, we have to re-draw it on the card
         if card.modifierValue != 0:
             card.image.blit(card.modifierBack.surface, card.modifierBack.rect)
@@ -410,10 +469,10 @@ class Application():
             self.winner.text = _("Equality!")
             self.winner.rect.topleft = self.backgroundRect.midtop
             self.winner.color = white
-        
+
         self.winner.changeColor()
         self.winner.rect.y += 10
-        
+
     def getCard(self, player):
         """Return the card at pygame.mouse.get_pos() coordinates """
         coords = pygame.mouse.get_pos()
@@ -428,7 +487,7 @@ class Application():
                     self.CARD = card
                     return 1
         elif player == 0:
-            #Case if we get a right-click, then we want to print the About 
+            #Case if we get a right-click, then we want to print the About
             #popup even if it is an ennemy's card
             for card in self.player1Hand.cards:
                 if card.rect.collidepoint(coords) and card.inHand:
@@ -437,9 +496,9 @@ class Application():
             for card in self.player2Hand.cards:
                 if card.rect.collidepoint(coords) and card.inHand:
                     self.infoCARD = card.About
-                    return 1         
+                    return 1
         return 0
-        
+
     def showAbout(self):
         """Show some info on the card if we do a right-click on it"""
         width = 0
@@ -465,7 +524,7 @@ class Application():
             self.screen.blit(background,rect)
             pygame.display.flip()
             self.clock.tick(self.fps)
-            
+
             if width < maxWidth and quit == 0:
                 width += 25
                 background = pygame.Surface((width, 140), SRCALPHA)
@@ -475,7 +534,7 @@ class Application():
                     rect.topleft = self.infoCARD.boss.rect.topright
                 elif self.infoCARD.boss.owner == -1:
                     rect.topright = self.infoCARD.boss.rect.topleft
-                    
+
             if quit == 1:
                 width -= 25
                 background = pygame.Surface((width, 140), SRCALPHA)
@@ -485,13 +544,13 @@ class Application():
                     rect.topleft = self.infoCARD.boss.rect.topright
                 elif self.infoCARD.boss.owner == -1:
                     rect.topright = self.infoCARD.boss.rect.topleft
-            
+
             if width == 0:
                 if quit == 1:
                     self.update()
                     return
                 quit = 1
-        
+
             for event in pygame.event.get():
                 if width == 0:
                     self.infoCARD = None
@@ -504,33 +563,18 @@ class Application():
                     setConfig(audio)
                     pygame.quit()
                     sys.exit()
-                    
+
             if width == maxWidth and quit == 0:
                 background.fill(COLOR)
                 background.blit(self.infoCARD.surface, self.infoCARD.rect)
-                
-        
+
+
         return 0
 
-
-    def randomHand(self, player):
-        """Get a random set of cards for 'player'. Return a Hand object"""
-        Cards = []
-        listCards = [card for card in range(len(allCards))]
-        random.shuffle(listCards)
-        
-        for i in range(5):
-            number = listCards[0]
-            Cards.append(Card(number, player))
-            listCards.remove(number)
-        
-        return Hand(Cards, player)
-    
-    
     def showName(self, player):
         """Show the name of the card selected at the bottom of the window"""
         self.backCard, self.backCardRect = loadImage("name.png")
-        
+
         if player == 1:
             for card in self.player1Hand.cards:
                 if card == self.CARD:
@@ -541,11 +585,11 @@ class Application():
                 if card == self.CARD:
                     name = self.CARD.name
                     self.cardName = Text(name, self.FONT, white, 40)
-    
+
         if self.cardName != None:
             self.cardName.rect.midbottom = self.backgroundRect.midbottom
             self.cardName.rect.y -= 10
             self.backCardRect.center = self.cardName.rect.center
-        
+
 if __name__ == '__main__':
     Application(800, 600).main()

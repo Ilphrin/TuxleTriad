@@ -75,6 +75,13 @@ class Card(pygame.sprite.Sprite):
         for i in range(0, 4):
             self.values[i] += self.modifierValue
 
+    def addCursor(self):
+        """Add a colored border to the focused card"""
+        
+        self.border, self.borderRect = loadImage("border.png")
+        self.borderRect.move_ip(0, 0)
+        self.image.blit(self.border, self.borderRect)
+
     def parseToInt(self):
         for i in range(0, 4):
             if (self.values[i] == 'A'):
