@@ -8,7 +8,7 @@ from functions import *
 
 
 class Field():
-    """Crée un terrain de 3x3 cases"""
+    """Create a 3x3 field"""
     def __init__(self, width, height, (cardWidth, cardHeight), boss):
         self.boss = boss
         self.x = width / 7

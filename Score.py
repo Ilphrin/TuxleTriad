@@ -50,3 +50,4 @@ class Score(pygame.sprite.Sprite):
 
     def __repr__(self):
         return "<Score de ", str(self.player), "= ", str(self.score)
+

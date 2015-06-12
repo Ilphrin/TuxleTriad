@@ -28,7 +28,6 @@ class  Player():
 
     coords = pygame.mouse.get_pos()
     if application.CARD != None:
-        print "coucou"
         if application.CARD.rect.collidepoint(coords):
             return
     isCard = application.getCard(application.player)
@@ -50,16 +49,16 @@ class  Player():
             pass
           application.reactivate()
           # If the player clicked on the field this time, we test
-          #each cases of the Field.
+          #each squares of the Field.
           FieldRect = application.field.fieldRects
           if application.field.rect.collidepoint(pygame.mouse.get_pos()):
             for line in range(len(FieldRect)):
-              for case in range(len(FieldRect[line])):
-                if FieldRect[line][case]\
+              for square in range(len(FieldRect[line])):
+                if FieldRect[line][square]\
                 .collidepoint(pygame.mouse.get_pos()):
-                  application.Case = application.field.fieldRects[line][case]
-                  if not application.caseFilled():
-                    application.numberCase = (line*3)+case
+                  application.Square = application.field.fieldRects[line][square]
+                  if not application.squareFilled():
+                    application.numberSquare = (line*3)+square
                     application.animation = 1
                     application.putCard()
                     application.cardsOwner()
@@ -73,7 +72,7 @@ class  Player():
       Cards = []
       listCards = [card for card in range(len(allCards))]
       random.shuffle(listCards)
-      for i in range(5):
+      for i in [1, 2, 3, 4, 5]:
           number = listCards[0]
           Cards.append(Card(number, player))
           listCards.remove(number)
@@ -114,11 +113,7 @@ class Application():
         self.player1 = Player(1)
         self.player2 = Player(-1)
         self.players = {1 : self.player1, -1 : self.player2}
-        # We generate two Hand and draw 5 cards from each
-        # to have an entire Hand of Card
-        # For player 1
         self.player1Hand = self.player1.hand
-        # For player 2
         self.player2Hand = self.player2.hand
 
         # We create the Score
@@ -140,7 +135,7 @@ class Application():
         # We create the field of the game, 3x3.
         sizeCard = self.player1Hand.cards[0].image.get_size()
         self.field = Field(self.width, self.height, sizeCard, self)
-        self.emptyCase = 9
+        self.emptySquare = 9
 
         self.alphaAnimation = 255
 
@@ -257,7 +252,7 @@ class Application():
 
         # We change the position of the card and the animation's direction
         if self.CARD.image.get_alpha() == 5:
-            self.CARD.rect = self.Case
+            self.CARD.rect = self.Square
             self.sensAnimation = 1
 
         if self.CARD.image.get_alpha() == 255 and self.sensAnimation == 1:
@@ -266,34 +261,34 @@ class Application():
             # And we have to look if that card captured some of the
             # ennemy's.
             self.animation = 0
-            caseElement = self.field.elementName[self.numberCase]
-            if caseElement != None:
-                self.Sound.playElement(caseElement)
-            if self.CARD.elementName == caseElement \
-            and caseElement != None:
+            squareElement = self.field.elementName[self.numberSquare]
+            if squareElement != None:
+                self.Sound.playElement(squareElement)
+            if self.CARD.elementName == squareElement \
+            and squareElement != None:
                 self.CARD.addModifier(1)
             else:
-                if caseElement != None:
+                if squareElement != None:
                     self.CARD.addModifier(-1)
             adjacentCards = self.getAdjacent()
             capturedCard = adjacent(self.CARD, adjacentCards)
             self.changeOwner(capturedCard)
-            self.emptyCase -= 1
+            self.emptySquare -= 1
             self.CARD = None
 
-        if self.emptyCase == 0:
+        if self.emptySquare == 0:
             self.winAnimation()
 
     def selectedCard(self):
         """Player has selected a card
         But not yet a place on the field"""
-        for i in range(5):
+        for i in [1, 2, 3, 4, 5]:
             self.CARD.rect.centerx += 4 * self.player
             self.update()
 
     def deselectedCard(self):
         """Finally, the player wants an other card"""
-        for i in range(5):
+        for i in [1, 2, 3, 4, 5]:
             self.CARD.rect.centerx -= 4 * self.player
         self.CARD = None
         self.update()
@@ -307,13 +302,13 @@ class Application():
         """Get back MOUSEMOTION"""
         pygame.event.set_allowed(MOUSEMOTION)
 
-    def caseFilled(self):
-        """Say if there is already a card in the case"""
+    def squareFilled(self):
+        """Say if there is already a card in the square"""
         for card in self.player1Hand.cards:
-            if card.rect == self.Case:
+            if card.rect == self.Square:
                 return 1
         for card in self.player2Hand.cards:
-            if card.rect == self.Case:
+            if card.rect == self.Square:
                 return 1
         return 0
 
@@ -463,7 +458,7 @@ class Application():
                     self.CARD = card
                     return 1
         elif player == 0:
-            #Case if we get a right-click, then we want to print the About
+            #If we get a right-click, then we want to print the About
             #popup even if it is an ennemy's card
             for card in self.player1Hand.cards:
                 if card.rect.collidepoint(coords) and card.inHand:

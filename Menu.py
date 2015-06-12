@@ -198,8 +198,8 @@ class Menu(pygame.sprite.Sprite):
                     self.quitGame()
                 elif event.type == MOUSEBUTTONDOWN:
                     mousex, mousey = pygame.mouse.get_pos()
-                    for i in range(len(cursors)):
-                        if cursors[i].collidepoint((mousex, mousey)):
+                    for i in range(len(bars)):
+                        if bars[i].collidepoint((mousex, mousey)):
                             while pygame.event.poll().type != MOUSEBUTTONUP:
                                 mousex, mousey = pygame.mouse.get_pos()
                                 if MIN <= mousex <= MAX:
@@ -294,13 +294,14 @@ class Menu(pygame.sprite.Sprite):
                     
                     for button in self.menu:
                         if button.rect.collidepoint(coords):
-                            self.sound.clicMenu.play()
                             if button.text == _("Back"):
                                 if page > 1:
                                     page -= 1
+                                    self.sound.putcard.play()
                             if button.text == _("Next"):
                                 if page < maxPage:
                                     page += 1
+                                    self.sound.putcard.play()
                             if button.text == _("Quit"):
                                 self.oldMenu()
                                 return
@@ -388,14 +389,14 @@ class Menu(pygame.sprite.Sprite):
         base_path = os.getcwd()
         directory = os.path.join(base_path, 'translations')
         print "Loading translations at: ", directory
-        
+
         params = {
                     'domain': 'tuxle-triad',
                     'fallback': True
                  }
         
         if os.path.isdir(directory):
-            params.update({'localedir':directory})
+            params.update({'localedir': directory})
         
         translation = gettext.translation(**params)
         

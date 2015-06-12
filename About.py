@@ -40,9 +40,7 @@ class About():
         self.surface.blit(self.license.surface, self.licenseRect)
         
 
-        
-        
-        
+ 
     def __repr__(self):
         output = self.name + "\n" + self.description + "\n" + \
                         self.initialRelease + "\t\t" + self.license + "\n"

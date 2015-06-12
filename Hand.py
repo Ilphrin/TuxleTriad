@@ -20,3 +20,4 @@ class Hand():
             card.rect = pygame.Rect([card.rect[0], card.rect[1],
                                       card.rect[2], DELTA])
             I += 1
+

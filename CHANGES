@@ -1,4 +1,8 @@
-2014-12-XX Kevin Pellet ilphrin@autistici.org
+2015-XX-YY Kevin Pellet ilphrin@autistici.org
+    * Menu.py (about) : Changed buttons sound
+    (options) : Get mouse click on bar instead of cursor
+
+2014-12-14 Kevin Pellet ilphrin@autistici.org
     * Rules.py (elementary) : New function to play with elements
     * Field.py (drawElements) : New function to draw element's icon on each
       cases of the field. 

@@ -12,3 +12,4 @@ class Button():
     def initialize(self):
         self.surface = self.font.render(self.text, True, self.color)
         self.rect = self.surface.get_rect()
+
