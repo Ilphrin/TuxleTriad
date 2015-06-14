@@ -21,3 +21,14 @@ class Hand():
                                       card.rect[2], DELTA])
             I += 1
 
+    def cardsOwner(self):
+        i = 0
+        for card in self.cards:
+            i += 1
+        return i
+        
+    def getCard(self, coords):
+        for i in range(len(self.cards)):
+            if self.cards[i].rect.collidepoint(coords) and self.cards[i].inHand:
+                return i
+        return None

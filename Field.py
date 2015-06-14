@@ -44,6 +44,15 @@ class Field():
             if len(lineField) == 3:
                 self.fieldRects.append(lineField)
                 lineField = []
+                
+    def squareClicked(self):
+        coords = pygame.mouse.get_pos()
+        if self.rect.collidepoint(coords):
+            for line in range(len(self.fieldRects)):
+                for square in range(len(self.fieldRects[line])):
+                    if self.fieldRects[line][square].collidepoint(coords):
+                        return line * 3 + square
+        return -1
             
     def saveState(self):
         """Allow to save the state of the game, to play later or for IA to

@@ -1,6 +1,12 @@
-2015-XX-YY Kevin Pellet ilphrin@autistici.org
+2015-06-14 Kevin Pellet ilphrin@autistici.org
     * Menu.py (about) : Changed buttons sound
+    (main) : Moved call to updateMenu() to call it just once
     (options) : Get mouse click on bar instead of cursor
+    * Field.py (squareClicked) : New function to return the square where the
+      has clicked
+    * Menu.py, game.py : Changed all animation to fit with different fps
+    * Hand.py (cardsOwner, getCard): Used to simplify game.py code from same
+      named functions
 
 2014-12-14 Kevin Pellet ilphrin@autistici.org
     * Rules.py (elementary) : New function to play with elements

@@ -36,7 +36,7 @@ class Menu(pygame.sprite.Sprite):
 
         # The Clock of the game, to manage the frame-rate
         self.clock = pygame.time.Clock()
-        self.fps = 80
+        self.fps = 30
 
         # We start the Sound object, playing music and sounds.
         self.sound = Sound()
@@ -59,21 +59,22 @@ class Menu(pygame.sprite.Sprite):
             elem.rect.center = ((posx, posy))
             posy += 100
         pygame.event.clear()
-
+        self.updateMenu()
         while 1:
-            self.updateMenu()
-            for event in pygame.event.get():
-                if event.type == MOUSEBUTTONUP:
-                    self.clicked()
-                elif event.type == QUIT:
-                    self.quitGame()
             pygame.display.flip()
+            deactivate()
+            event = pygame.event.wait()
+            if event.type == MOUSEBUTTONUP:
+                self.clicked()
+            elif event.type == QUIT:
+                self.quitGame()
             self.clock.tick(self.fps)
 
     def updateMenu(self):
         self.screen.blit(self.bkgrnd, self.bkgrndRect)
         for i in range(len(self.menu)):
             self.screen.blit(self.menu[i].surface, self.menu[i].rect)
+        self.clock.tick(self.fps)
 
     def quitGame(self):
         setConfig(self.sound.volume)
@@ -83,8 +84,8 @@ class Menu(pygame.sprite.Sprite):
     def oldMenu(self):
         while(1):
             for button in self.menu:
-                button.rect.centerx -= 20
-                if (button.rect.centerx <= - 700):
+                button.rect.centerx -= 100 - self.fps
+                if (button.rect.centerx <= - 500):
                     return;
             self.updateMenu()
             pygame.display.flip()
@@ -124,34 +125,32 @@ class Menu(pygame.sprite.Sprite):
         for i in range(length):
             self.menu.append(Text(texts[i], self.FONT, white, 45))
             self.menu[i].rect.topleft = textPos[i]
-            
+        self.updateMenu()          
+        pygame.display.flip()
+        self.clock.tick(self.fps)
         while 1:
-            self.updateMenu()
-            pygame.display.flip()
-            
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif event.type == MOUSEBUTTONUP:
-                    coordinates = pygame.mouse.get_pos()
-                    for i in range(length):
-                        if self.menu[i].rect.collidepoint(coordinates):
-                            self.sound.clicMenu.play()
-                            self.oldMenu()
-                            if self.menu[i].text == _("Adventure"):
-                                return
-                            elif self.menu[i].text == _("Solo"):
-                                return
-                            elif self.menu[i].text == _("Hot Seat"):
-                                self.hotSeat()
-                            elif self.menu[i].text == _("Back"):
-                                return
-                            elif self.menu[i].text == _("Continue"):
-                                self.app.main()
+            event = pygame.event.wait()
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == MOUSEBUTTONUP:
+                coordinates = pygame.mouse.get_pos()
+                for i in range(length):
+                    if self.menu[i].rect.collidepoint(coordinates):
+                        self.sound.clicMenu.play()
+                        self.oldMenu()
+                        if self.menu[i].text == _("Adventure"):
+                            return
+                        elif self.menu[i].text == _("Solo"):
+                            return
+                        elif self.menu[i].text == _("Hot Seat"):
+                            self.hotSeat()
+                        elif self.menu[i].text == _("Back"):
+                            return
+                        elif self.menu[i].text == _("Continue"):
+                            self.app.main()
                     
     def options(self):
-        pygame.event.clear()
         texts = [_("Audio"), _("Sounds"), _("Music"), _("Back")]
         length = len(texts)
         textsPos = [(320, 100), (100, 200), (100, 300), (550, 500)]
@@ -183,60 +182,61 @@ class Menu(pygame.sprite.Sprite):
         cursor2Rect.topleft = \
           (bar2Rect.x + 225 * self.sound.musicVolume, bar2Rect.y - 23)
         cursors = [cursor1Rect, cursor2Rect]
-
+        self.screen.blit(self.bkgrnd, self.bkgrndRect)
+        self.screen.blit(bar1, bar1Rect)
+        self.screen.blit(bar2, bar2Rect)
+        self.screen.blit(cursor1, cursors[0])
+        self.screen.blit(cursor2, cursors[1])
+        for i in range(length):
+            self.screen.blit(self.menu[i].surface, self.menu[i].rect)
+        pygame.display.update()
+        move = 0
         while 1:
-            self.screen.blit(self.bkgrnd, self.bkgrndRect)
-            self.screen.blit(bar1, bar1Rect)
-            self.screen.blit(bar2, bar2Rect)
-            self.screen.blit(cursor1, cursors[0])
-            self.screen.blit(cursor2, cursors[1])
-            for i in range(length):
-                self.screen.blit(self.menu[i].surface, self.menu[i].rect)
+            event = pygame.event.wait()
+            mousex, mousey = pygame.mouse.get_pos()
+            if event.type == QUIT:
+                self.quitGame()
+            elif event.type == MOUSEBUTTONDOWN:
+                move = 1
+                reactivate()
+            elif event.type == MOUSEBUTTONUP:
+                move = 0
+                deactivate()
+            for i in range(len(bars)):
+                if move == 1 and bars[i].collidepoint((mousex, mousey)):
+                    if MIN <= mousex <= MAX:
+                        cursors[i].centerx = mousex
+                    elif mousex > bars[i].x + MAX_VOLUME:
+                        cursors[i].centerx = bars[i].x + MAX_VOLUME
+                    else:
+                        cursors[i].centerx = bars[i].x + MIN_VOLUME
+                    volume = cursors[i].centerx - MIN
+                    if volume != 0:
+                        volume = (volume / 2.25) / 100.0
+                    assert (0.0 <= volume <= 1.0)
 
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    self.quitGame()
-                elif event.type == MOUSEBUTTONDOWN:
-                    mousex, mousey = pygame.mouse.get_pos()
-                    for i in range(len(bars)):
-                        if bars[i].collidepoint((mousex, mousey)):
-                            while pygame.event.poll().type != MOUSEBUTTONUP:
-                                mousex, mousey = pygame.mouse.get_pos()
-                                if MIN <= mousex <= MAX:
-                                    cursors[i].centerx = mousex
-                                elif mousex > bars[i].x + MAX_VOLUME:
-                                    cursors[i].centerx = bars[i].x + MAX_VOLUME
-                                else:
-                                    cursors[i].centerx = bars[i].x + MIN_VOLUME
-                                volume = cursors[i].centerx - MIN
-                                if volume != 0:
-                                    volume = (volume / 2.25) / 100.0
-                                assert (0.0 <= volume <= 1.0)
-
-                                if i == 0:
-                                    self.sound.soundVolume = volume
-                                    self.sound.playPutCard()
-                                elif i == 1:
-                                    self.sound.musicVolume = volume
-                                self.sound.update()
-
-                                self.screen.blit(self.bkgrnd, self.bkgrndRect)
-                                self.screen.blit(bar1, bar1Rect)
-                                self.screen.blit(bar2, bar2Rect)
-                                self.screen.blit(cursor1, cursors[0])
-                                self.screen.blit(cursor2, cursors[1])
-                                for j in range(4):
-                                    self.screen.blit(self.menu[j].surface,\
-                                                      self.menu[j].rect)
-                                pygame.display.flip()
-
-                    if self.menu[3].rect.collidepoint((mousex, mousey)):
-                        del bar1, bar2, bars, cursor1, cursor2, cursors
-                        self.oldMenu()
-                        self.sound.clicMenu.play()
-                        return
-
-                pygame.display.update()
+                    if i == 0:
+                        self.sound.soundVolume = volume
+                        self.sound.playPutCard()
+                        self.sound.update()
+                    elif i == 1:
+                        self.sound.musicVolume = volume
+                        self.sound.update()
+                    self.screen.blit(self.bkgrnd, self.bkgrndRect)
+                    self.screen.blit(bar1, bar1Rect)
+                    self.screen.blit(bar2, bar2Rect)
+                    self.screen.blit(cursor1, cursors[0])
+                    self.screen.blit(cursor2, cursors[1])
+                    for j in range(4):
+                        self.screen.blit(self.menu[j].surface,\
+                                          self.menu[j].rect)
+                    pygame.display.update()
+                    self.clock.tick(self.fps)
+                if move and self.menu[3].rect.collidepoint((mousex, mousey)):
+                    del bar1, bar2, bars, cursor1, cursor2, cursors
+                    self.oldMenu()
+                    self.sound.clicMenu.play()
+                    return
                 
     def about(self):
         page = 1
@@ -273,45 +273,53 @@ class Menu(pygame.sprite.Sprite):
             self.menu[i].rect.topleft = navigationPos[i]
 
         cardPos = [(50,50), (50,200), (50, 350)]
-
+        self.screen.blit(self.bkgrnd, self.bkgrndRect)
+        for element in self.menu:
+            self.screen.blit(element.surface,element.rect)
+        for elem in range(len(allPage[page-1])):
+            card = allPage[page-1][elem]
+            card.rect.topleft = cardPos[elem]
+            card.About.rect.topleft = card.rect.topright
+        
+        for elem in allPage[page-1]:
+            self.screen.blit(elem.image, elem.rect)
+            self.screen.blit(elem.About.surface, elem.About.rect)
         while 1:
-            self.screen.blit(self.bkgrnd, self.bkgrndRect)
-            for element in self.menu:
-                self.screen.blit(element.surface,element.rect)
-
-            for elem in range(len(allPage[page-1])):
-                card = allPage[page-1][elem]
-                card.rect.topleft = cardPos[elem]
-                card.About.rect.topleft = card.rect.topright
-            
-            for elem in allPage[page-1]:
-                self.screen.blit(elem.image, elem.rect)
-                self.screen.blit(elem.About.surface, elem.About.rect)
-            
-            for event in pygame.event.get():
-                if event.type == MOUSEBUTTONUP:
-                    coords = pygame.mouse.get_pos()
-                    
-                    for button in self.menu:
-                        if button.rect.collidepoint(coords):
-                            if button.text == _("Back"):
-                                if page > 1:
-                                    page -= 1
-                                    self.sound.putcard.play()
-                            if button.text == _("Next"):
-                                if page < maxPage:
-                                    page += 1
-                                    self.sound.putcard.play()
-                            if button.text == _("Quit"):
-                                self.oldMenu()
-                                return
-                            txtPage = str(page) + "/" + str(maxPage)
-                            self.menu[7] = Text(txtPage, self.FONT, white, 30)
-                            self.menu[7].rect.topleft = navigationPos[7]
-                if event.type == QUIT:
-                    self.quitGame()
-
+            self.clock.tick(self.fps)
             pygame.display.flip()
+            event = pygame.event.wait()
+            if event.type == MOUSEBUTTONUP:
+                coords = pygame.mouse.get_pos()
+                
+                for button in self.menu:
+                    if button.rect.collidepoint(coords):
+                        if button.text == _("Back"):
+                            if page > 1:
+                                page -= 1
+                                self.sound.putcard.play()
+                        if button.text == _("Next"):
+                            if page < maxPage:
+                                page += 1
+                                self.sound.putcard.play()
+                        if button.text == _("Quit"):
+                            self.oldMenu()
+                            return
+                        txtPage = str(page) + "/" + str(maxPage)
+                        self.menu[7] = Text(txtPage, self.FONT, white, 30)
+                        self.menu[7].rect.topleft = navigationPos[7]
+                        self.screen.blit(self.bkgrnd, self.bkgrndRect)
+                        for element in self.menu:
+                            self.screen.blit(element.surface,element.rect)
+                        for elem in range(len(allPage[page-1])):
+                            card = allPage[page-1][elem]
+                            card.rect.topleft = cardPos[elem]
+                            card.About.rect.topleft = card.rect.topright
+                        for elem in allPage[page-1]:
+                            self.screen.blit(elem.image, elem.rect)
+                            self.screen.blit(elem.About.surface,
+                              elem.About.rect)
+            if event.type == QUIT:
+                self.quitGame()
             
     def rules(self):
         tutorialButton = Button(_(u"Tutorial"), self.FONT, white)
@@ -325,25 +333,25 @@ class Menu(pygame.sprite.Sprite):
         self.menu.append(tutorialButton)
         self.menu.append(howtoButton)
         self.menu.append(backButton)
-        
+        self.updateMenu()
         while (1):
-            self.updateMenu()
-            for event in pygame.event.get():
-                if event.type == MOUSEBUTTONUP:
-                    coords = pygame.mouse.get_pos()
-                    for i in range(len(self.menu)):
-                        if self.menu[i].rect.collidepoint(coords):
-                            self.oldMenu()
-                            if self.menu[i].text == _(u"Tutorial"):
-                                self.main()
-                            elif self.menu[i].text == _(u"How To"):
-                                self.HowTo()
-                                return
-                            elif self.menu[i].text == _(u"Back"):
-                                self.main()
-                elif event.type == QUIT:
-                    self.quitGame()
+            self.clock.tick(self.fps)
             pygame.display.flip()
+            event = pygame.event.wait()
+            if event.type == MOUSEBUTTONUP:
+                coords = pygame.mouse.get_pos()
+                for i in range(len(self.menu)):
+                    if self.menu[i].rect.collidepoint(coords):
+                        self.oldMenu()
+                        if self.menu[i].text == _(u"Tutorial"):
+                            self.main()
+                        elif self.menu[i].text == _(u"How To"):
+                            self.HowTo()
+                            return
+                        elif self.menu[i].text == _(u"Back"):
+                            self.main()
+            elif event.type == QUIT:
+                self.quitGame()
              
     def HowTo(self):
         backButton = Button(_("Back"), self.FONT, white)
@@ -364,27 +372,26 @@ class Menu(pygame.sprite.Sprite):
         self.menu.append(backButton)
         self.menu.append(prevButton)
         self.menu.append(nextButton)
-                
+        self.updateMenu()
+        self.screen.blit(pageList[page - 1], pageRect)        
         while (1):
-            self.updateMenu()
-            self.screen.blit(pageList[page - 1], pageRect)
-
-            for event in pygame.event.get():
-                if event.type == MOUSEBUTTONUP:
-                    coords = pygame.mouse.get_pos()
-                    if backButton.rect.collidepoint(coords):
-                        self.oldMenu()
-                        return
-                    elif prevButton.rect.collidepoint(coords) and page > 1:
-                        page -= 1
-                    elif nextButton.rect.collidepoint(coords) and page < maxPage:
-                        page += 1
-                elif event.type == QUIT:
-                    self.quitGame()
+            self.clock.tick(self.fps)
             pygame.display.flip()
-            
-        
-        
+            event = pygame.event.wait()
+            if event.type == MOUSEBUTTONUP:
+                coords = pygame.mouse.get_pos()
+                if backButton.rect.collidepoint(coords):
+                    self.oldMenu()
+                    return
+                elif prevButton.rect.collidepoint(coords) and page > 1:
+                    page -= 1
+                elif nextButton.rect.collidepoint(coords) and page < maxPage:
+                    page += 1
+                self.updateMenu()
+                self.screen.blit(pageList[page - 1], pageRect)  
+            elif event.type == QUIT:
+                self.quitGame()
+
     def _load_translation(self):
         base_path = os.getcwd()
         directory = os.path.join(base_path, 'translations')

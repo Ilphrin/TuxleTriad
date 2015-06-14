@@ -2,7 +2,7 @@
 
 import pygame
 import os
-
+from pygame.locals import *
 
 def loadImage(name):
     """Example:
@@ -130,3 +130,12 @@ def getHowTo(page):
     elif page == 1:
         File = os.path.join(os.getcwd(), "howTo/Second.png")
     return File
+
+def deactivate():
+    """Deactivate MOUSEMOTION event and clean the queue"""
+    pygame.event.set_blocked(MOUSEMOTION)
+    pygame.event.clear()
+
+def reactivate():
+    """Get back MOUSEMOTION"""
+    pygame.event.set_allowed(MOUSEMOTION)
